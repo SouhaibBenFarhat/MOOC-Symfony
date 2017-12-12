@@ -1,0 +1,34 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+
+                <fieldset class="scheduler-border">
+                    <div class="col-md-6 col-md-offset-3">
+
+                        <form action="{{ path("creer_quizz_cours") }}" method="post" class="form"><legend><b> Veuillez Renseigner les donnes necessaire</b></legend>.
+
+                            <input type="number" id="" name="nbr_question" class="form-control" required="required" placeholder='nombre de question' required  min="2" max="20"/> <br>
+                            <input type="number" id="" name="nbr_reponse_question" class="form-control" required="required" placeholder='nombre de reponse par question'required min="2" max="5" /><br>
+                            <input type="text" value= "{{ quizzCours.idQuizzCours }}"   name="idQuizzCours" hidden> <br>
+                            <div>
+                                <input type="submit" value="Suivant" class='btn-primary'  /><br>
+                                
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </fieldset>
+            </div>            
+        </div>
+    </section>
+{% endblock content %}

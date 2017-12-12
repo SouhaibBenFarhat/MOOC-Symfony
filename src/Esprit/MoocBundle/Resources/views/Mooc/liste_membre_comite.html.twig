@@ -1,0 +1,39 @@
+{% block content %} 
+   <section id="portfolio">
+    <div class="container">
+    <div class="container conteneur-page-invitation" id="div-apprenant">
+	<br>
+	<table class="table table-hover table-invitations container">
+		<thead>
+			<tr>
+                <th><center>Membre comite </center></th>
+				<th></th>
+			</tr>
+		</thead>
+        <tbody>
+            {% for m in membres%}
+			<tr>
+				<td><center><a href="#">{{ m.username}}</a></center></td>
+				<td>
+						
+	       
+				</td>
+			</tr>
+            
+{% endfor%}
+            
+		</tbody>
+		
+		  
+    <!-- Footer -->
+		    <!-- Fin Footer -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+	</table>
+         </div> <!-- /.modal -->
+		    
+		</div><!-- /.container -->
+      
+        
+        </section>	
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block  titre %} Mes sujets {% endblock %}
+{% block content %}
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+    <script>
+        function notification()
+        {
+
+            $("#notification").attr("style", "color:#878585");
+
+            $("#numbernotif").html("&nbsp&nbsp&nbsp");
+            jQuery.ajax({
+                type: 'GET',
+                url: '{{ path('mes_notifications') }}',
+                success: function (data) {
+        {#alert(data['name'])#}
+                    }
+                });
+            }
+            function notification2()
+            {
+        {% set j=1 %}
+        {% for notification in notifications %}
+
+                $("#alert{{j}}").attr("class", "alert alert-success");
+            {% set j=j+1 %}
+        {% endfor %}
+
+            }
+    </script>
+{% set i=0 %} {% for notification in notifications %} {% if notification.idUtilisateurNotification !=app.security.getToken().getUser() %}{% set i=i+1 %}{% endif %}{% endfor %} 
+<div class="container col-md-offset-1" style="margin-top: 35px">
+    <div class="page-header page-heading">
+        <h1 class="pull-left">Forums</h1>
+        <ol class="breadcrumb pull-right where-am-i">
+            <li><a href="{{ path('nos_forum') }}">Forums</a></li>
+            <li class=""><a href="{{ path('mes_sujets') }}"  style="color: #241F1F;" >Mes sujet</a></li>
+            <li class="active"><a href="{{ path('mes_interventions') }}"  >Mes interventions</a></li>
+            &nbsp &nbsp  <i  id="notification" onclick="notification()"  data-toggle="modal" data-target="#myModal" class="fa fa-globe fa-2x"
+                             {% if i==0 %}
+                                 style="color: #878585; ">
+                             {%else%}
+                                 style="color: red;">
+                                 <small id="numbernotif"> {{i}}</small>
+                             {% endif %}
+            </i>  
+
+        </ol>
+        <div class="clearfix"><legend> <b> Mes Sujets</b></legend>  <a href="#publier" class=" pull-right btn-primary">Publier sujet </a></div>
+
+    </div>
+
+    <p class="lead">This is the right place to discuss any ideas, critics, feature requests and all the ideas regarding our website. Please follow the forum rules and always check FAQ before posting to prevent duplicate posts.</p>
+    <table class="table forum table-striped">
+        <thead>
+            <tr>
+                <th class="cell-stat"></th>
+                <th class="cell-stat text-center hidden-xs hidden-sm">
+                    Sujet
+                </th>
+                <th class="cell-stat text-center hidden-xs hidden-sm">Posts</th>
+                <th class="cell-stat-2x hidden-xs hidden-sm">Last Post</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sujet in sujets  %}
+                <tr>
+                    <td class="text-center"><i class="fa fa-question fa-2x text-primary"></i></td>
+                    <td>
+                        <h4><a href="{{ path('afficher_sujet',{idSujet:sujet.id}) }}">{{ sujet.titreSujet }}</a><br><small> <a href="">by {{ sujet.idApprenant.username }}</a></small><br>
+                            <small>{{ sujet.sousTitreSujet | raw }}<br>
+                                <a href="{{ path('forum',{idDiscipline:sujet.idForum.idDiscipline.idDiscipline}) }}"><i class="fa fa-tag"></i>  {{ sujet.idForum.nomForum  }}</a><br>
+                                <a href="{{ path('cours_by_discipline',{idDiscipline:sujet.idForum.idDiscipline.idDiscipline}) }}"><i class="fa fa-book"></i> related courses</a><br>
+                                <a href="">  <i class="fa fa-thumbs-o-up">{{ sujet.nombreJaime }}</i></a>
+                            </small></h4>
+                    </td>
+                    <td class="text-center hidden-xs hidden-sm">  {% if sujet.nombreMessage!=0 %} <a href="#">{{ sujet.nombreMessage }}{% else %}</a> -- {% endif %}</td>
+                    <td class="hidden-xs hidden-sm"> <a href="#"> 
+                            {#{% if loop.last %}#}
+
+
+                        </a>by <a href="">{% if sujet.lastPoster is not null %} {{ sujet.lastPoster.username  }}{% endif %} </a><br> <i class="fa fa-clock-o"></i>  {% if sujet.lastPoster is not null %}  {{ sujet.lastPoste.datePublicationMessage|date("F jS \\a\\t g:ia")  }}   {% endif%}         
+
+
+                            {#{% endif %}#}<br>
+                            <small>
+                                {#     {{ sujet.datePublicationSujet|date("F jS \\a\\t g:ia") }}#}
+                            </small>
+                    </td>
+                </tr>
+            {% endfor  %}
+        </tbody>
+    </table>
+
+</div>
+<div class="text-center" style="">
+    <ul class="pagination">
+        {{ knp_pagination_render(sujets) }}
+    </ul>
+</div>
+<div id="publier" class="row">
+    <div id="">
+        <br><br><br><br><br>
+        <div class="col-md-7 col-md-offset-1" id="">
+            <form class="form" method="post"  role="form" action="{{ path('publier_sujet_list') }}">
+                <legend><b>Créer un nouveau sujet</b></legend><br>
+                <div class="col-md-6 ">
+                    <select class="form-control " name="idForum" required>
+                        <option value="">--Select One--</option>
+                        {% for forum in forums %}
+                            <option value="{{ forum.id }}">{{ forum.nomForum }}</option>                             
+                        {% endfor %}
+                    </select> <br>
+                    <input type="text" class="form-control" placeholder="Titre de sujet..."  name="titreSujet" required><br>
+                    <input type="text" class="form-control" placeholder="Sous-titre..."  name="sousTitreSujet"><br>
+                </div>
+                <br><br><br><br><br><br><br><br><br>
+                <textarea class="ckeditor" rows="10" name="descriptionSujet" required></textarea><br>
+                <input type="submit" class="btn-primary pull-right" value="Envoyer" >
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Mes notifications...</h4>
+            </div>
+            <div class="modal-body">
+                {% set k=1 %}
+                {% for notification in notifications %}
+
+                    {% if notification.idUtilisateurNotification !=app.security.getToken().getUser() %}
+                        <div id="alert{{k}}" class="alert alert-warning">
+                            <label> <a href="">{{ notification.idSujetNotification.titreSujet }}</a></label><br>
+                            <small>{{ notification.dateNotification |date("F jS \\a\\t g:ia")  }}</small><br> 
+                            <small><b>by </b><a href="">{{ notification.idUtilisateurNotification.username }}</a></small>
+                        </div> 
+                        {% set k=k+1 %}
+                    {% endif %}
+                {% endfor %}
+                {% if i==0 %}
+                    aucune notification pour aujourd'hui...<br><br><br>
+                {% endif %}
+                <a href="" class=" btn-primary">see all</a>
+
+                {#  <a href="{{ path('supprimer_message',{idMessage:message.id}) }}" class=" btn-primary">Envoyer</a>#}
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button"  onclick="notification2()" class=" btn-primary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

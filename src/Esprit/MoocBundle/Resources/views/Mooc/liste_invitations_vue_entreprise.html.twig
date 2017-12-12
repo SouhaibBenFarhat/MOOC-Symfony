@@ -1,0 +1,52 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block content %}
+   <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+   <section id="portfolio">
+    <div class="container">
+        <div id="page-2"></div>
+    <div class="container conteneur-page-invitation" id="page">
+
+
+		 <div class="col-md-12">
+            {%for f in formateurs %}
+	
+            {%for i in information %}
+	{%if f.id==i.formateur.id  and f.enabled=='1'%}
+                             <div class="col-sm-6 col-md-4">
+                                  <div class="thumbnail">
+                           
+                           <img src="{{asset ('uploads/photos/man4.jpg')}}" alt="website template image" class="img-responsive"/>
+                               
+                             
+                                   
+                                    <h2><p><i class="fa fa-user"></i> <small><a href="{{ path('fos_user_profile_show_with_id',{id:f.id})}}">{{f.username}}</a></small></p></h2>
+                                    <h3>Specialite : </h3> {{i.specialite}} 
+                               <h3>Site Web : </h3>{{i.siteWeb}}
+                           
+                               <center>    <h3> <a href="{{ path('entreprise_accepter_formateur',{ idFormateur:f.id })}}"><i class="glyphicon glyphicon-ok"></i></a>
+                                
+                                       <a href="{{ path('entreprise_refuser_formateur',{ idFormateur:f.id })}}"><i class="glyphicon glyphicon-trash"></i></a></h3 ></center>
+        
+       
+
+                          
+                                    
+                                  </div>
+                             </div>
+              {%endif %}          
+            {%endfor %}
+            {%endfor %}
+             </div>
+		  
+            
+    <!-- Footer -->
+		    <!-- Fin Footer -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+         </div> <!-- /.modal -->
+		    
+		</div><!-- /.container -->
+      
+       
+        </section>	
+{% endblock %}

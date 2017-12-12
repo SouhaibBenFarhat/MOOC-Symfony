@@ -1,0 +1,36 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+                <fieldset class="scheduler-border">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form action="{{ path('creer_quizz_chapitre') }}" method="post" class="form"><legend><b> Veuillez Renseigner les données necessaires</b></legend>.
+                            <input type="number" id="" name="nbr_question" class="form-control input-lg" required="required" placeholder='nombre de question' required  min="2" max="20"/> <br>
+                            <input type="number" id="" name="nbr_reponse_question" class="form-control input-lg" required="required" placeholder='nombre de reponse par question'required min="2" max="5" /><br>
+                            <select class="form-control input-lg" name="idChapitre">
+                                {% set i=1 %}
+                                {% for chapitre in chapitres %}
+                                    {% if chapitre.idQuizzChapitre is null %}
+                                        <option value="{{ chapitre.idChapitre }}"> Chapitre {{i}}:  {{ chapitre.titreChapitre}}</option>
+                                        {% set i=i+1 %}
+                                    {% endif %}
+                                {% endfor %}   
+                            </select><br><br>
+
+                            <div>
+                                <input type="submit" value="Suivant" class='btn-primary'  /><br>
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+            </div>            
+        </div>
+    </section>
+{% endblock content %}

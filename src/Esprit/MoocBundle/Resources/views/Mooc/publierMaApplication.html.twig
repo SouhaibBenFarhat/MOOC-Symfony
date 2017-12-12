@@ -1,0 +1,100 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+
+{% block content %} 
+    <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+ <script>
+
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this),
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
+        });
+
+        $(document).ready(function () {
+            $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+
+                var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                if (input.length) {
+                    input.val(log);
+                } else {
+                    if (log)
+                        alert(log);
+                }
+
+            });
+        });
+
+    </script> 
+
+    <section id="portfolio" style="margin-left: 20%">
+        <div class="container" id="wrap">
+            <div class="row">   
+
+                <form action="{{ path('publier_ma_application')}}" method="POST"  class="form" role="form" enctype="multipart/form-data">   
+
+                    
+                       
+                    <div class="col-md-6 col-md-offset-1">
+                        <legend>Publier Ma Application</legend>
+                   <label class="">Nom de L'application </label> <br>
+                        <div class="span12">
+                        <input class="form-control" name="nom" placeholder="Nom..." required /><br>
+                         </div>
+
+                        <label class="">Description</label> <br>
+                        <div class="span12">
+                            <textarea  class="form-control" name="description" placeholder="Description" required rows="10"></textarea><br>
+                        </div>
+                         <label class="">Discipline</label> <br>
+
+                        <select class="form-control" name="discipline" required>
+                            <option value="">--Select One--</option>
+                            {% for d in discipline %}
+                                <option value="{{d.idDiscipline}}">{{d.nomDiscipline }}</option>
+                            {% endfor %}
+                        </select> <br>
+                      
+                    </div>
+
+                    <div class="col-md-6 col-md-offset-1" align="center" >
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="image1" accept="image/*"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="Image" required>
+                        </div>
+                           <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="imag2" accept="image/*"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="Image" required>
+                        </div>
+                           <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="image3" accept="image/*"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="Image" required>
+                        </div>
+                        <br>
+                       
+                        <br />
+                        <input type="submit" name="" value="Finish" class="btn btn-primary">
+                    </div>
+               
+               
+                </form>
+            </div>
+
+        </div>
+
+    </section>
+{% endblock %}

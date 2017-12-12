@@ -1,0 +1,97 @@
+{% block content %} 
+            <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+<section id="portfolio">
+    <div class="container">
+    <div class="container conteneur-page-invitation" id="div-apprenant">
+        <br>
+        <div class="conteneur-msg">
+       <div class="span12">
+            <div id="custom-search-form" class="form-search form-horizontal pull-right">
+                <div class="input-append span12">
+                   <input type="text" class="form-control" placeholder="Search" name="nom" id="nom">
+                   <script type="text/javascript">
+      $(document).ready(function(){
+      $('#nom').keyup(function() {    
+        
+          nom =$('#nom').val();
+       $.ajax({
+            method: "POST",
+            url: "{{ path('rechercher_entreprise')}}",
+            data: { nom: nom },
+            beforeSend: function () {
+                      console.log("ça charge"); 
+                    },
+            success: function (data) {
+                 console.log("ok ok ") ;
+                     $('#page').hide();
+                   $('#page-2').html(data);
+                    
+                    
+                            
+                    }
+              });
+                    });
+      });
+</script>           
+     
+                </div>
+            </div>
+        </div>
+        </div>
+      <div class="col-md-12">
+         
+            {%for e in pagination %}
+			  {%for i  in information %} 
+                  {%if(e.id==i.entreprise.id)%}
+                             <div class="col-sm-6 col-md-4">
+                                  <div class="thumbnail">
+                           
+                           <img src="{{asset('uploads/userPhoto/' ~ e.userPhoto.path )}}" alt="website template image" class="img-responsive"/>
+                               
+                            <h2><p><i class="fa fa-user"></i> <small><a href="{{ path('fos_user_profile_show_with_id',{id:e.id})}}">{{e.username}}</a></small></p></h2>
+                                   <b>Specialite : </b>{{i.specialite}}<br/>
+                                    <b>Description : </b>{{i.description}}
+                                     {% if  is_granted('ROLE_SUPER_ADMIN') %} 
+                                    {% if(e.enabled=='1') %} 
+                                        <h3> <a href="{{ path('disable_entreprise',{id:e.id})}}"><i class="glyphicon glyphicon-lock"></i></a></h3>
+                                  {% endif %}
+                                   {% if(e.enabled=='0')%} 
+                                        <h3> <a href="{{ path('enable_entreprise',{id:e.id})}}"><i class="glyphicon glyphicon-ok"></i></a></h3>
+                                    {% endif %}
+                                    {% endif %}
+                                     {% if  is_granted('ROLE_FORMATEUR') %} 
+                                     {% if(app.user.idEntrepriseUtlisateur is null ) %} 
+                                     {%if invitations is empty %}
+                                       {#{% if(app.user.id != inv.idFormateur.id ) %} 
+                                        #}
+                                        <h3> <a href="{{ path('formateur_envoyer_invitation_entreprise',{idEntreprise:e.id})}}"><i class="glyphicon glyphicon-plus-sign"></i></a></h3>
+                               
+                                     {#  {% endif %}#}
+                                     {% endif %}
+                                    {% endif %}
+                                    {% endif %}
+                                   
+                                     
+                                  </div>
+                                     </div>
+                                  
+                                  {% endif %}
+                                  {% endfor %}
+                                  
+
+            {%endfor %}
+
+		
+    <!-- Footer -->
+		    <!-- Fin Footer -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+         </div> <!-- /.modal -->
+		    
+		</div><!-- /.container -->
+                <div id="page-2"></div>
+    </div>        
+                
+        </section>
+              
+{% endblock %}

@@ -1,0 +1,67 @@
+{% block content %}
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+ 
+    {% if app.request.get('notice') =='success' %}
+        <script>
+            $(document).ready(function () {
+                $.notify("Ajouté", "success");
+            });
+        </script>
+    {% endif %}
+ 
+                <fieldset class="scheduler-border">
+                    <div class="col-md-8 col-md-offset-1">
+                        <form action="{{ path("ajouter_forum") }}" method="post" class="form"><legend><b> Ajouter Forum  </b></legend>
+                            <input type="text" class="form-control" name="nomForum" placeholder="Titre forum..." required><br>
+                            <select class="form-control" name="idDiscipline" required>
+                                {% set i=0 %}
+                                {% for discipline in disciplines %}
+                                    {% if discipline.idForum is null %}
+                                        <option value="{{ discipline.idDiscipline }}">{{ discipline.nomDiscipline }}</option>
+                                        {% set i=i+1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if i==0 %}
+                                    <option value="">Aucune discipline disponible...</option>
+                                {% endif %}
+                            </select><br>
+                            {%if i==0 %}
+                                <div class="alert alert-warning">
+                                    Veuillez créer une nouvelle discipline avant d'Ajouter un forum <a data-toggle="collapse" data-parent="#accordion"
+                                                                                                       href="#collapse-1">cliquer içi? </a>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-link">
+                                    Voulez vous ajouter une discipline? <a data-toggle="collapse" data-parent="#accordion"
+                                                                           href="#collapse-1">cliquer içi</a>
+                                </div>
+                            {% endif %}
+                            <div>
+                                <input type="submit" value="Valider" class='btn-primary' />
+                            </div>
+                        </form><br>
+                        <div class="col-md-12">
+                            <div id="collapse-1" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <form action="{{ path('ajouter_discipline') }}" method="post" class="form" enctype="multipart/form-data"><legend><b> Ajouter Discipline</b></legend>
+                                        <input type="text" class="form-control" placeholder="Titre discipline..." required="" name="nomDiscipline"><br>
+                                        <textarea class="ckeditor" name="Description"> Description...</textarea><br>
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <span class=" btn-primary btn-file btn">
+                                                    Browse&hellip; <input type="file"  name="logo" accept="image/png"  required>
+                                                </span>
+                                            </span>
+                                            <input type="text" class="form-control" readonly placeholder="Logo.png !  100x100" required>
+                                        </div><br><br>
+                                        <div>
+                                            <input type="submit" value="Valider" class='btn-primary' />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+        
+{% endblock content %}

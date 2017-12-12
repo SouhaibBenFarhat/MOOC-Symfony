@@ -1,0 +1,679 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<br/><br/>
+{% if is_granted('ROLE_ENTREPRISE') %}
+    {#
+    <div class="alert-info alert">
+        <legend>
+            <h5>
+            {{ 'profile.show.username'|trans }}: {{ user.username }}<br>
+            {{ 'profile.show.email'|trans }}: {{ user.email }}<br>
+            {{ user.informationEntreprise.siteWeb }}<br>
+            {{ user.informationEntreprise.description }}<br>
+            </h5>
+        </legend>
+    
+    </div>
+           #} <br/><br/><br/> <br/><br/><br/>
+    <section id="about-us">
+        <div class="container">
+            <div class="col-md-1 no-padding">
+
+
+                <!--  Debut le menu de navigation gauche -->
+
+                <!-- Fin -->
+
+
+
+            </div>
+            <div class="col-md-11" style="padding-right: 0px;">
+
+                <div class="panel panel-primary">
+                    <div class="profil">
+                        <div class="panel-heading"> 
+                            <h1 class="panel-title">{{ user }}</h1>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="container small-margin-top" style="width :80%;" >
+
+                            <div class="img-dossier" style="width: 18%; float: left;">
+                                <img src="{{asset ('bundles/espritmooc/images/man4.jpg')}}"
+                                     class="img-responsive img-dossier-small" /> 
+
+                          
+                            </div>
+
+                        </div>
+                        <div class=" small-margin-top">
+
+                            <div class="panel panel-default col-md-7 no-padding">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title bold">
+                                        Information personel
+                                    </h2>
+                                </div>
+                                <div class="panel-body">
+
+                                    <hr class="col-md-12 no-padding">
+                                    <p class="col-md-5 no-padding bold">
+                                        Adresse :
+                                    </p>
+                                    <p class="col-md-7 no-padding">{{ user.informationEntreprise.adresse }}</p>
+
+                                    <hr class="col-md-12 no-padding">
+
+                                    <p class="col-md-5 no-padding bold">
+                                        nationalite :
+                                    </p>
+                                    <p class="col-md-7 no-padding">
+
+                                        {{ user.informationEntreprise.nationnalite }}
+                                    </p>
+                                    <hr class="col-md-12 no-padding">
+
+
+                                    <p class="col-md-5 no-padding bold">
+                                        email :
+                                    </p>
+                                    <p class="col-md-7 no-padding">{{ user.email }}</p>
+                                    <hr class="col-md-12 no-padding">
+
+
+                                    <p class="col-md-5 no-padding bold">
+                                        Description :
+                                    </p>
+                                    <p class="col-md-7 no-padding">{{ user.informationEntreprise.description }}</p>
+
+
+
+                                    <!--     <div class="panel panel-default col-md-4 no-padding">
+                                                                 <div class="panel-heading">
+                                                                         <h2 class="panel-title bold">
+                                                                                 Modifer CV
+                                                                                 
+                                                                         </h2>
+                                                                 </div>
+                                                                 <div class="panel-body">
+                                                                         <a href="../Resources/Images/<%=dossier%>.pdf">CV</a>
+                                                                          
+                                                                         <a data-toggle="modal" href="#myModalDoc"
+                                                                                 class="btn btn-success btn-sm btn-modifier no-radius"> <span
+                                                                                 class="glyphicon glyphicon-file"></span>modifier</a>
+                                                                         
+                                                                 </div>
+                                                         </div> -->
+                                </div>
+
+
+                            </div><!--/.row-->
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col-md-1"></div>
+
+
+
+                    <div class="col-md-1"></div>
+
+
+
+                    <div class="col-md-1"></div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal pour photo-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Photo</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <form id="secondForm" method="POST" action="UploadFile"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="matricule" id="matricule"
+                               value="matricule">
+
+                        <div class="fileUpload btn btn-primary col-md-3">
+                            <input id="uploadBtn" type="file" class="upload" name="photo"
+                                   style="opacity: 1"  /> <span>Ajouter...</span>
+                        </div>
+                        <input id="uploadFile" placeholder="Choisir un fichier"
+                               class="col-md-6" disabled="disabled" />
+                        <button type="submit" id="uploadPhoto"
+                                class="btn btn-success pull-right col-md-2">
+                            <i class=" glyphicon glyphicon-download-alt"> </i>
+                            continuer
+                        </button>
+
+                    </form>
+
+
+                    <!-- code javascript pour recuperer le chemin du fichier-->
+                    <script type="text/javascript">
+                        document.getElementById("uploadBtn").onchange = function () {
+                            document.getElementById("uploadFile").value = this.value;
+                        };
+                    </script>
+                    <br />
+
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+
+
+    <!-- Modal pour dossier-->
+    <div class="modal fade" id="myModalDoc" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">
+                        dossier.medical
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <form id="secondForm" method="POST" action="UploadFile"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="matricule" id="matricule"
+                               value=" mat ">
+
+                        <div class="fileUpload btn btn-primary col-md-3">
+                            <input id="uploadDocBtn" type="file" class="upload" name="photo"
+                                   style="opacity: 1" /> <span><fmt:message key="ajouter" />
+                                ...</span>
+                        </div>
+                        <input id="uploadDocFile" placeholder="Choisir un fichier"
+                               class="col-md-6" disabled="disabled" />
+                        <button type="submit" id="uploadPhoto"
+                                class="btn btn-success pull-right col-md-2">
+                            <i class=" glyphicon glyphicon-download-alt"> </i>
+                            continuer
+                        </button>
+
+                    </form>
+
+
+                    <!-- code javascript pour recuperer le chemin du fichier-->
+                    <script type="text/javascript">
+                        document.getElementById("uploadDocBtn").onchange = function () {
+                            document.getElementById("uploadDocFile").value = this.value;
+                        };
+                    </script>
+                    <br />
+
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+
+            </div>
+        </div>
+    </div>
+    <!-- /.modal dossier-->
+
+
+</div><!--/.container-->
+</section><!--/about-us-->
+{% endif %}
+{% if is_granted('ROLE_FORMATEUR') %}
+    {#
+    <div class="alert-info alert">
+        <legend>
+            <h5>
+            {{ 'profile.show.username'|trans }}: {{ user.username }}<br>
+            {{ 'profile.show.email'|trans }}: {{ user.email }}<br>
+            {{ user.informationEntreprise.siteWeb }}<br>
+            {{ user.informationEntreprise.description }}<br>
+            </h5>
+        </legend>
+    
+    </div>
+            <br/><br/><br/> <br/><br/><br/>#}
+    <section id="about-us">
+        <div class="container">
+            <div class="col-md-11 pull-right" style="padding-right: 0px;">
+                <div class="row"style="margin-left: 0px">
+                    <div class=" col-md-0">
+                        <div class="profil">
+                            <div class=" col-md-0 " style="padding-right: 500px;" >
+                                <h1 class="panel-title"></h1>
+                            </div>
+                        </div>
+                        <div class=" col-md-0">
+                            <div class="container small-margin-top" style="width :80%;" ><br>
+                                <div class="" style="width:80%; float: right;">
+                                    <div class="profil-info">
+                                        <h3 class="bold"> </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="panel panel-default col-md-12 no-padding" style="background: #F4F4F0;">
+                                    <div class="panel-heading" style="background: #F4F4F0;">
+                                    </div>
+                                    <div class="col-md-0 col-md-offset-1">
+                                        <p class="col-md-5 no-padding bold">
+                                            {{ user.username }}
+                                        </p>
+                                        <p class="col-md-7 ">    <div class="img-dossier" style="width: 18%; float: left;">
+                                            <img src="{{asset('uploads/userPhoto/' ~ user.userPhoto.path )}}" class="img-thumbnail" />
+                                        </div></p>
+                                        <hr class="col-md-9 ">
+                                        <p class="col-md-5 no-padding bold">
+                                            Specialite
+                                        </p>
+                                        <p class="col-md-7 ">{{ user.informationFormateur.specialite }}</p>
+                                        <hr class="col-md-9 ">
+                                        <p class="col-md-5 ">
+                                            email :
+                                        </p>
+                                        <p class="col-md-7 ">
+                                            {{ user.email }}
+                                        </p>
+                                        <hr class="col-md-9 ">
+                                        <p class="col-md-5 no-padding bold">
+                                            Biographie
+                                        </p>
+                                        <p class="col-md-7 ">
+                                            {{user.informationFormateur.biographie | raw}}
+                                        </p>
+                                        <hr class="col-md-9 ">
+                                        <p class="col-md-5 no-padding bold">
+                                            Trophies
+                                        </p>
+                                        <p class="col-md-7 ">
+
+                                        <p id="trophie" class="col-md-2 ">
+                                            <img   src="{{asset ('bundles/espritmooc/images/trophies/ecolier.png')}}"
+                                        </p>
+
+                                        <p class="col-md-2 ">
+                                            <img src="{{asset ('bundles/espritmooc/images/trophies/frimeur.png')}}"
+                                        </p>
+                                        <p class="col-md-2 ">
+                                            <img src="{{asset ('bundles/espritmooc/images/trophies/mooc_html5.png')}}"
+                                        </p>
+                                        <p class="col-md-5 no-padding bold">
+
+                                        </p>
+                                        <p class="col-md-2 ">
+                                            <img src="{{asset ('bundles/espritmooc/images/trophies/bienfaiteur.png')}}"
+                                        </p>
+                                        <p class="col-md-2 ">
+                                            <img src="{{asset ('bundles/espritmooc/images/trophies/scribe.png')}}"
+                                        </p>
+                                        </p>
+
+                                    </div>
+
+                                    <br><br><br><br><br><br>
+
+
+                                </div>
+
+                                <div class="panel panel-default col-md-10 no-padding" style="background-color: #FFFFFF;">
+                                    <div class="col-md-10 col-md-offset-1">
+                                        <div class="tab-wrap"> 
+                                            <br>
+                                            <div class="media">
+                                                <div class="parrent pull-left">
+                                                    <ul class="nav nav-tabs nav-stacked">
+                                                        {% set i=1 %}
+                                                        {% set class='active' %}
+                                                        {% for c in cours %}
+                                                            <li class="{{class}}"><a href="#tab{{i}}" data-toggle="tab" class="analistic-01">{{ c.titreCours }}</a></li>
+                                                                {% set i=i+1 %}
+                                                                {% set class='' %}
+                                                            {% endfor %}
+                                                    </ul>
+                                                </div>
+
+                                                <div class="parrent media-body">
+                                                    <div class="tab-content">
+                                                        {% set j=1 %}
+                                                        {% set tabClass='active in' %}
+                                                        {% for c in cours %}
+
+                                                            <div class="tab-pane fade {{tabClass}}" id="tab{{j}}">
+                                                                <div class="media">
+                                                                    <div class="pull-left">
+                                                                        {#    <img class="img-responsive" src="images/tab1.png">#}
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h2></h2>
+                                                                        <p>{{ c.introductionCours | raw }} <br>
+                                                                            <button class=" btn-primary "  style="font-color=white; background: #0097A7;">  <a  href="{{ path('esprit_mooc_details_cours',{idCours:c.idCours})}}" data-filter="*" class="lien">Lire la suite</a></button>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {% set tabClass='' %}
+                                                            {% set j=j+1 %}
+                                                        {% endfor %}
+
+                                                    </div> <!--/.tab-content-->  
+                                                </div> <!--/.media-body--> 
+                                            </div> <!--/.media-->     
+                                        </div><!--/.tab-wrap-->               
+                                    </div><!--/.col-sm-6-->
+                                </div>
+                            </div><!--/.row-->
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+            document.getElementById("uploadDocBtn").onchange = function () {
+                document.getElementById("uploadDocFile").value = this.value;
+            };
+        </script>
+        <br />
+    </section><!--/about-us-->
+
+{% endif %}
+
+{% if is_granted('ROLE_APPRENANT') %}
+    {#
+    <div class="alert-info alert">
+        <legend>
+            <h5>
+            {{ 'profile.show.username'|trans }}: {{ user.username }}<br>
+            {{ 'profile.show.email'|trans }}: {{ user.email }}<br>
+            {{ user.informationEntreprise.siteWeb }}<br>
+            {{ user.informationEntreprise.description }}<br>
+            </h5>
+        </legend>
+    
+    </div>
+            <br/><br/><br/> <br/><br/><br/>#}
+    <section id="about-us">
+        <div class="container">
+            <div class="col-md-1 no-padding">
+
+
+                <!--  Debut le menu de navigation gauche -->
+
+                <!-- Fin -->
+
+
+
+            </div>
+            <div class="col-md-11" style="padding-right: 0px;">
+
+                <div class="panel panel-primary">
+                    <div class="profil">
+                        <div class="panel-heading"> 
+                            <h1 class="panel-title">{{ user }}</h1>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="container small-margin-top" style="width :80%;" >
+
+                            <div class="img-dossier" style="width: 18%; float: left;">
+                                 {% if app.user.userPhoto is not null %}
+                                   <img src="{{asset('uploads/userPhoto/' ~ app.user.userPhoto.path )}}" class="img-circle" />
+                                {% else %}
+                                   <img src="{{asset('uploads/userPhoto/user4.jpg')}}" class="img-circle" />
+                                 {% endif %}
+                                <!--	<a
+                                        data-toggle="modal" href="#myModal"
+                                        class="btn btn-success btn-sm btn-modifier no-radius"> <span
+                                        class="glyphicon glyphicon-picture"></span> </a>-->
+
+                            </div>
+
+                            <div class="" style="width:80%; float: right;">
+                                <div class="profil-info">
+                                    <h3 class="bold"> {{ user.username }}</h3>
+                                    <h5>
+                                    </h5>
+                                    <h5>
+                                    </h5>
+                                    <h5>
+                                    </h5>
+                                    <div>
+
+                                    </div></div>
+                                <div class="profil-options">
+
+                                    <button class="btn btn-primary" style="font-color=white;">  <a  href="#" data-filter="*" class="lien">Mes Cours</a></button>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class=" small-margin-top">
+
+                            <div class="panel panel-default col-md-7 no-padding">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title bold">
+                                        Information personel
+                                    </h2>
+                                </div>
+                                <div class="panel-body">
+
+                                    <hr class="col-md-12 no-padding">
+                                    <p class="col-md-5 no-padding bold">
+                                        Specialite
+                                    </p>
+                                    <p class="col-md-7 no-padding">{{ user }}</p>
+
+                                    <hr class="col-md-12 no-padding">
+
+                                    <p class="col-md-5 no-padding bold">
+                                        email :
+                                    </p>
+                                    <p class="col-md-7 no-padding">
+
+                                        {{ user.email }}
+                                    </p>
+                                    <hr class="col-md-12 no-padding">
+
+
+                                    <p class="col-md-5 no-padding bold">
+
+                                    </p>
+                                    <p class="col-md-7 no-padding"></p>
+                                    <hr class="col-md-12 no-padding">
+
+
+                                    <p class="col-md-5 no-padding bold">
+
+                                    </p>
+                                    <p class="col-md-7 no-padding"></p>
+
+
+
+                                    <!--     <div class="panel panel-default col-md-4 no-padding">
+                                                                 <div class="panel-heading">
+                                                                         <h2 class="panel-title bold">
+                                                                                 Modifer CV
+                                                                                 
+                                                                         </h2>
+                                                                 </div>
+                                                                 <div class="panel-body">
+                                                                         <a href="../Resources/Images/<%=dossier%>.pdf">CV</a>
+                                                                          
+                                                                         <a data-toggle="modal" href="#myModalDoc"
+                                                                                 class="btn btn-success btn-sm btn-modifier no-radius"> <span
+                                                                                 class="  glyphicon-file"></span>modifier</a>
+                                                                         
+                                                                 </div>
+                                                         </div> -->
+                                </div>
+
+
+                            </div><!--/.row-->
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col-md-1"></div>
+
+
+
+                    <div class="col-md-1"></div>
+
+
+
+                    <div class="col-md-1"></div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal pour photo-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Photo</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <form id="secondForm" method="POST" action="UploadFile"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="matricule" id="matricule"
+                               value="matricule">
+
+                        <div class="fileUpload btn btn-primary col-md-3">
+                            <input id="uploadBtn" type="file" class="upload" name="photo"
+                                   style="opacity: 1"  /> <span>Ajouter...</span>
+                        </div>
+                        <input id="uploadFile" placeholder="Choisir un fichier"
+                               class="col-md-6" disabled="disabled" />
+                        <button type="submit" id="uploadPhoto"
+                                class="btn btn-success pull-right col-md-2">
+                            <i class=" glyphicon glyphicon-download-alt"> </i>
+                            continuer
+                        </button>
+
+                    </form>
+
+
+                    <!-- code javascript pour recuperer le chemin du fichier-->
+                    <script type="text/javascript">
+                        document.getElementById("uploadBtn").onchange = function () {
+                            document.getElementById("uploadFile").value = this.value;
+                        };
+                    </script>
+                    <br />
+
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+
+
+    <!-- Modal pour dossier-->
+    <div class="modal fade" id="myModalDoc" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">
+                        dossier.medical
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <form id="secondForm" method="POST" action="UploadFile"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="matricule" id="matricule"
+                               value=" mat ">
+
+                        <div class="fileUpload btn btn-primary col-md-3">
+                            <input id="uploadDocBtn" type="file" class="upload" name="photo"
+                                   style="opacity: 1" /> <span><fmt:message key="ajouter" />
+                                ...</span>
+                        </div>
+                        <input id="uploadDocFile" placeholder="Choisir un fichier"
+                               class="col-md-6" disabled="disabled" />
+                        <button type="submit" id="uploadPhoto"
+                                class="btn btn-success pull-right col-md-2">
+                            <i class=" glyphicon glyphicon-download-alt"> </i>
+                            continuer
+                        </button>
+
+                    </form>
+
+
+                    <!-- code javascript pour recuperer le chemin du fichier-->
+                    <script type="text/javascript">
+                        document.getElementById("uploadDocBtn").onchange = function () {
+                            document.getElementById("uploadDocFile").value = this.value;
+                        };
+                    </script>
+                    <br />
+
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+
+            </div>
+        </div>
+    </div>
+    <!-- /.modal dossier-->
+
+
+</div><!--/.container-->
+</section><!--/about-us-->
+
+{% endif %}

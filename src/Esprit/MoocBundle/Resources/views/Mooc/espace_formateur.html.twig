@@ -1,0 +1,122 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block content %}
+
+{#    <br/><br/> <br/>
+    <div id="wrapper">
+
+        <!-- /. NAV TOP  -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <!-- /. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <div class="user-img-div"  data-toggle="modal" data-target="#myModal">
+                            {% if user.userPhoto is not null %}
+                                <a href=""     >    <img src="{{asset('uploads/userPhoto/' ~ user.userPhoto.path )}}" class="img-thumbnail" /></a>
+                                {% endif %}
+
+                            <div class="inner-text">
+                                HELLO {{ user|upper }}
+                                <br />
+                            </div>
+                        </div>
+
+                    </li>          
+                {#    <li>
+                        <a href="#" id="listeApp"><i class="fa fa-user"></i>Mon profil</a>
+
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $('#listeApp').click(function () {
+                                    $("#page-inner").load("{{ path('fos_user_profile_show')}}");
+                                });
+                            });
+                        </script>
+                    </li>#}
+
+                   {# <li>
+                         <a href="#" id="listeFormateurs"><i class="fa fa-university "></i>Mes cours</a>
+                        <a href="{{ path('mes_cours') }}" id=""><i class="fa fa-university "></i>Mes cours</a>
+                         <script type="text/javascript">
+$(document).ready(function(){
+$('#listeFormateurs').click(function() {
+     $( "#page-inner" ).load("{{path('liste_autre_formateurs')}}");
+});
+});
+</script>
+                    </li>#}
+                    <li>
+                        <a href="#" id="ajoutCours"><i class="fa fa-university "></i>Ajouter Cours</a>
+
+
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $('#ajoutCours').click(function () {
+                                    $("#page-inner").load("{{path('formateur_ajout_cours')}}");
+                                });
+                            });
+                        </script>
+                    </li>
+                   {# <li>
+                        <a href="{{ path('ajouter_forum') }}" id=""><i class="fa fa-university "></i>Ajouter Forum</a>
+                    </li>#}
+                    <li>
+                        <a href="{{ path('list_discipline') }}" id=""><i class="fa fa-university "></i>Liste discipline</a>
+                    </li>
+                    <li>
+                    </li>
+                    <li>
+                    </li>
+                   {# <li>
+                        <a href="{{path('ajouter_forum')}}"><i class="fa fa-university "></i>Ajouter Forum</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('mes_sujets') }}" id=""><i class="fa fa-envelope-o "></i>Mes Sujets</a>
+                    </li>#}
+                </ul>
+            </div>
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <div id="page-inner"></div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modifier</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form" method="post" action="{{ path('changer_photo') }}"  enctype="multipart/form-data">
+                        <label class="pull-left">Changer votre photo</label><br><br>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="file" accept="image/gif, image/jpeg, image/png"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="your picture" required>
+
+                        </div><br>
+                        <input type="submit" class=" pull-left btn-primary" value="Modifier">
+                    </form><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>#}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+
+{% block content %}
+
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+
+                <fieldset class="scheduler-border">
+                    <div class="col-md-6 col-md-offset-3">
+                        {% if message is defined %}
+                            <legend> <center><div class="alert alert-danger">  {{ message }} </div> </center> </legend>
+
+
+                        {% else %}
+                            {% if score >=15 %}
+                                {#<legend><b> Bravo  </b> </legend>#}
+                                <img src="{{asset ('bundles/espritmooc/images/Smiley.png')}}"><br>
+                            {% endif %}
+                            {% if score <15 and score >=10 %}
+                                {#<legend> <b>Pas Mal  </b> </legend>#}
+                                <img src="{{asset ('bundles/espritmooc/images/notbad.jpg')}}"><br><br>
+                            {% endif %}
+                            <legend> <center><div class="alert alert-info">   Merci {{ app.user.username }} d'avoir participer à notre Quizz, Votre Score Finale est :</div> </center> </legend>
+                            <h3> <div class="alert alert-success">   {{ score }}   / 20 </div> </h3><br>
+                            <form action="{{ path('correction_quizz_cours',{idCours:quizz.idCoursQuizzCours.idCours}) }}"> <input type="submit" name="submit" value="Afficher la correction" class=" btn-primary"> </form>
+
+                        {% endif %}
+
+                    </div>
+                </fieldset>
+            </div>            
+        </div>
+    </section>
+{% endblock content %}

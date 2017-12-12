@@ -1,0 +1,43 @@
+
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+
+
+
+                    {% trans_default_domain 'FOSUserBundle' %}
+                    <legend><b> Edit Your Profile 2 </b></legend>
+                    {{ form_start(form, { 'action': path('edit_information_entreprise',{role:"Apprenant"}), 'attr': { 'class': 'form' } }) }}
+                    {{ form_widget(form.specialite,{'attr': {'class': 'form-control input-lg','placeholder':'spécialité'}}) }}<br>
+                    {{ form_widget(form.siteWeb,{'attr': {'class': 'form-control input-lg','placeholder':'Site web'}}) }}<br>
+                    {{ form_widget(form.abreviation,{'attr': {'class': 'form-control input-lg','placeholder':'Abreviation'}}) }}<br>
+                    {{ form_widget(form.gouvernerat,{'attr': {'class': 'form-control input-lg','placeholder':'Gouvernerat'}}) }}<br>
+                    {{ form_widget(form.description,{'attr': {'class': 'form-control input-lg','placeholder':'description'}}) }}<br>
+                    {{ form_widget(form.codePostale,{'attr': {'class': 'form-control input-lg','placeholder':'Current Password'}}) }}<br>
+                    {{ form_widget(form.adresse,{'attr': {'class': 'form-control input-lg','placeholder':'adresse'}}) }}<br>
+                    {{ form_widget(form.nationnalite,{'attr': {'class': 'form-control input-lg','placeholder':'Current Password'}}) }}<br>
+                    {{ form_widget(form.numTel,{'attr': {'class': 'form-control input-lg','placeholder':'Current Password'}}) }}<br>
+                    {{ form_widget(form.matriculeFiscal,{'attr': {'class': 'form-control input-lg','placeholder':'Current Password'}}) }}<br>
+                    {{ form_widget(form.raisonInscription,{'attr': {'class': 'form-control input-lg','placeholder':'Current Password'}}) }}<br>
+{#                    {{ form_widget(form.filename,{'attr': {'class': 'form-control input-lg','placeholder':'Current Password','display': 'hidden'}}) }}<br>
+#}                    <div>
+                        <input type="submit" value="Finish" class='btn-primary' />
+                    </div>
+                    {{ form_widget(form._token) }} {{ form_end(form, {'render_rest': false}) }}
+
+                </div>
+            </div>            
+        </div>
+    </div>
+</section>
+{% endblock fos_user_content %}
+

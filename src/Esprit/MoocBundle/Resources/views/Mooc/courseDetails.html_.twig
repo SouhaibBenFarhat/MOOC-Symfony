@@ -1,0 +1,364 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+
+{% block content %} 
+
+    <section id="blog" class="container">
+        <div class="center">
+            <div class="get-started center wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+                <h2></h2>
+                <p class="lead"><legend><b>{{ cours.titreCours }}</b></legend><br>{{ cours.introductionCours }} </p>
+                <div class="request">
+                    <h4><a href="#">&nbsp&nbsp&nbsp&nbsp&nbsp Elephent Word &nbsp&nbsp&nbsp&nbsp&nbsp</a></h4>
+                </div>
+            </div>
+            <h2> </h2>
+            <p class="lead"></p>
+        </div>
+
+        <div class="blog">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="blog-item">
+
+                        <div class="embed-responsive" style="background-color: black;" >
+                            <video width="100%" height="350" controls   class="embed-responsive-item"  allowfullscreen >
+                                <source src="{{asset('uploads/video/' ~ cours.videoCours )}}" type="video/mp4">
+                            </video>
+                        </div>
+                        <br>
+                        <div class="row">  
+                            <div class="col-xs-12 col-sm-2 text-center">
+                                <div class="entry-meta">
+                                    <span id="publish_date">07  NOV</span>
+                                    <span id=""><center><i class="fa fa-clock-o"></i> <a href="#"> {{cours.dureeCours}} heurs</a></center></span>
+                                    <span><center><i class="fa  fa-signal"></i> <a href="">{#{{ chapitre.niveauChapitre }}#} Hard </a></center></span>
+                                    <span><center><i class="fa fa-heart"></i><a href="#"> 56 Likes</a></center></span>
+                                    <span><center><i class="fa fa-trophy"></i><a href="{{ path('afficher_quizz_cours',{idcours:cours.idCours}) }}"> Quizz</a></center></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-10 blog-content media reply_section"><br>
+                                <h2>{{ cours.TitreCours }}</h2>
+                                {{ cours.DescriptionCours | raw }}
+
+                                <div class="post-tags">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div><!--/.blog-item-->
+
+                    <div class="media reply_section">
+                        <div class="pull-left post_reply text-center">
+                            <a href="#"><img src="{{asset ('bundles/espritmooc/images/blog/boy.png')}}" class="img-circle" alt="" /></a>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i> </a></li>
+                            </ul>
+                            <br><br>
+                        </div>
+
+
+
+                        <h3><strong>Ce Cours à etait publier de la part du Professeur  <a href="{{ path('fos_user_profile_show_with_id',{id:cours.idFormateurCours.id}) }}">{{cours.idFormateurCours.username}}</a></strong></h3>
+                        <p class="lead"></p>
+                        <p><strong>Web:</strong> <a href="http://www.shapebootstrap.net">www.shapebootstrap.net</a></p>
+                    </div>
+
+
+
+                    <div class="media reply_section">
+                        <div class="media-body post_reply_content">
+                            <h3><b>Objectif </b></h3>
+                            {{  cours.objectifCours | raw}}
+                        </div>
+                    </div> 
+                    <br>
+
+                    <div class="alert alert-info">
+
+                        <div class="media-body post_reply_content">
+                            <h3><b>Prerequis </b></h3>
+                            {{  cours.prerequisCours | raw }}
+                        </div> 
+                    </div>
+                    <div class="media">
+                        <div class="parrent pull-left">
+                            <ul class="nav nav-tabs nav-stacked">
+                                {%set  i=1 %}
+                                {% set foo = 'active' %}
+                                {% for chapitre in chapitres %}
+                                    <li class="{{foo}}}"><a href="#tab{{i}}" data-toggle="tab" class="analistic-01">Chapitre {{ i }}</a></li>
+                                        {%set  i=i+1 %}
+                                        {% set foo = '' %}
+                                    {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="parrent media-body">
+                            <div class="tab-content">
+
+
+                                {%set  i=1 %}
+                                {% set foo2 = 'active in' %}
+                                {% for chapitre in chapitres %}
+
+
+                                    <div class="tab-pane fade {{foo2}}" id="tab{{i}}">
+                                        <div class="media">
+
+                                            <div class="single-profile-top wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <h4>Chapitre {{ i }} {{chapitre.titreChapitre}}</h4>
+                                                    </div>
+                                                </div><!--/.media -->
+                                                <p>{{ chapitre.introductionChapitre }}<br><br></p>
+                                                <a class=" btn-primary" href="{{ path('afficher_chapitre',{idChapitre:chapitre.idChapitre,idCours:cours.idCours}) }}">Read More </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% set foo2 = '' %}
+                                    {%set  i=i+1 %}
+                                {% endfor %}
+
+                                <div class="tab-pane fade" id="tab2">
+                                    <div class="media">
+
+                                        <div class="single-profile-top wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h4>Chapter 2 Description</h4>
+                                                </div>
+                                            </div><!--/.media -->
+                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                            <a class="btn btn-primary" href="chapter.html">Read More </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab3">
+                                    <div class="media">
+
+                                        <div class="single-profile-top wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h4>Chapter 2 Description</h4>
+                                                </div>
+                                            </div><!--/.media -->
+                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                            <a class="btn btn-primary" href="chapter.html">Read More </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab4">
+                                    <div class="media">
+
+                                        <div class="single-profile-top wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h4>Chapter 2 Description</h4>
+                                                </div>
+                                            </div><!--/.media -->
+                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                            <a class="btn btn-primary" href="chapter.html">Read More </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab5">
+                                    <div class="media">
+
+                                        <div class="single-profile-top wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h4>Chapter 2 Description</h4>
+                                                </div>
+                                            </div><!--/.media -->
+                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                            <a class="btn btn-primary" href="chapter.html">Read More </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!--/.tab-content-->  
+                        </div> <!--/.media-body--> 
+                    </div>
+                    <div class="media">
+                        <div class="media">
+                        </div>
+                        <div class="media">
+                            <div class="parrent media-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade" id="tab2">
+                                        <div class="media">
+
+                                            <div class="single-profile-top wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <h4>Chapter 2 Description</h4>
+                                                    </div>
+                                                </div><!--/.media -->
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                                <a class="btn btn-primary" href="chapter.html">Read More </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab3">
+                                        <div class="media">
+
+                                            <div class="single-profile-top wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <h4>Chapter 2 Description</h4>
+                                                    </div>
+                                                </div><!--/.media -->
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                                <a class="btn btn-primary" href="chapter.html">Read More </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab4">
+                                        <div class="media">
+
+                                            <div class="single-profile-top wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <h4>Chapter 2 Description</h4>
+                                                    </div>
+                                                </div><!--/.media -->
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                                <a class="btn btn-primary" href="chapter.html">Read More </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab5">
+                                        <div class="media">
+
+                                            <div class="single-profile-top wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <h4>Chapter 2 Description</h4>
+                                                    </div>
+                                                </div><!--/.media -->
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                                <a class="btn btn-primary" href="chapter.html">Read More </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!--/.tab-content-->  
+                            </div> <!--/.media-body--> 
+                        </div>
+                        <h1 id="comments_title"></h1>
+
+
+                        {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id':cours.idCours} %}
+
+
+
+
+                    </div><!--/.col-md-8-->
+                </div>
+
+                <aside class="col-md-4" style="background-color: #F3F3F3;">
+                    <div style="margin-top: -210px">
+
+                    </div>
+                    <div class="widget search">
+                        <form role="form">
+                            <input type="text" class="form-control search_box" autocomplete="off" placeholder="Search Here">
+                        </form>
+                    </div><!--/.search-->
+
+                    <div class="widget categories">
+                        <h3>Recent Courses</h3>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% for coursF in coursFormateur %}
+                                    <div class="single_comments">
+                                        <img src="{{asset ('bundles/espritmooc/images/services/courses/course.png')}}" alt=""  height="42" width="42">
+                                        <p><a href="{{ path('esprit_mooc_details_cours',{id:coursF.idCours})}}">{{ coursF.titreCours }}</a></p>
+                                        <div class="entry-meta small muted">
+                                            <span>By <a href="{{ path('fos_user_profile_show_with_id',{id:coursF.idFormateurCours.id }) }}">{{ coursF.idFormateurCours.username }}</a></span>{#On <a href="{{ path('esprit_mooc_details_cours',{id:coursF.idCours})}}">{{ coursF.titreCours }}</a>#}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+
+                            </div>
+                        </div>                     
+                    </div><!--/.recent comments-->
+
+
+                    <div class="widget categories">
+                        <h3>Categories</h3>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="blog_category">
+                                    <li><a href="#">Computers <span class="badge">04</span></a></li>
+                                    <li><a href="#">Smartphone <span class="badge">10</span></a></li>
+                                    <li><a href="#">Gedgets <span class="badge">06</span></a></li>
+                                    <li><a href="#">Technology <span class="badge">25</span></a></li>
+                                </ul>
+                            </div>
+                        </div>                     
+                    </div><!--/.categories-->
+
+                    <div class="widget archieve">
+                        <h3>Archieve</h3>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="blog_archieve">
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> December 2013 <span class="pull-right">(97)</span></a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> November 2013 <span class="pull-right">(32)</span></a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> October 2013 <span class="pull-right">(19)</span></a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> September 2013 <span class="pull-right">(08)</span></a></li>
+                                </ul>
+                            </div>
+                        </div>                     
+                    </div><!--/.archieve-->
+
+                    <div class="widget tags">
+                        <h3>Tag Cloud</h3>
+                        <ul class="tag-cloud">
+                            <li><a class="btn btn-xs btn-primary" href="#">Apple</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Barcelona</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Office</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Ipod</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Stock</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Race</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">London</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Football</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Porche</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Gadgets</a></li>
+                        </ul>
+                    </div><!--/.tags-->
+
+                    <div class="widget blog_gallery">
+                        <h3>Our Gallery</h3>
+                        <ul class="sidebar-gallery">
+                            <li><a href="#"><img src="images/blog/gallery1.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery2.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery3.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery4.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery5.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery6.png" alt=""></a></li>
+                        </ul>
+                    </div><!--/.blog_gallery-->
+
+
+                </aside>
+
+            </div><!--/.row-->
+
+        </div><!--/.blog-->
+
+    </section><!--/#blog-->
+
+{% endblock %}

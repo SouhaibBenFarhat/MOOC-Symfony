@@ -1,0 +1,75 @@
+{% block content %} 
+    <section id="portfolio">
+        <div class="container">
+            <div class="row">
+
+                {% if user is defined %}
+
+
+
+                    <div class="row">
+
+                        <div class="container">
+                            <div class="center wow fadeInDown animated animated" style="visibility: visible; animation-name: fadeInDown;">
+                                <h2>Bibliotheque de {{ user }} </h2>
+                                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+                            </div>
+
+                            <div class="row">
+
+                                {% for e in pagination %}
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <a href="{{ path('apprenant_supprim_cour',{id:e.idBibliotheque})}}" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <table>
+                                            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                                            <div class="media services-wrap wow fadeInDown animated animated" style="visibility: visible; animation-name: fadeInDown;">
+                                                <div class="pull-left">
+                                                    <a>  <img class="img-responsive" src="{{asset ('bundles/espritmooc/images/services/courses/course.png')}}"></a>
+                                                </div>
+                                                <div class="media-body">
+                                                    {#e.idApprenantBibliotheque#}
+                                                    <h3 class="media-heading">{{ e.idCoursBibliotheque.titreCours }}</h3>
+                                                    {# <p>{{ e.idCoursBibliotheque.nomDiscipline}}</p>#}
+                                                    <p>{{ e.idCoursBibliotheque.descriptionCours[:20] }}...</p>
+                                                    <p>{{ e.idCoursBibliotheque.idFormateurCours}}</p>
+                                                     {# <p>{% include 'DCSRatingBundle:Rating:control.html.twig' with {'id' : user.id} %}</p>
+                                                   #}
+                                                    {#                            <a href="{{ path('apprenant_ajout_cour',{id:e.idCoursBibliotheque.titreCours})}}">Ajouter au bibliotheque</a>
+                                                    #}                        </div>
+                                            </div>
+                                            </tr>
+                                        </table>
+                                    </div>   <!--/ fin cour -->
+
+                                {% endfor %}
+
+                            </div><!--/.row-->
+                            <div class="text-center" style="">
+                                <ul class="pagination">
+                                    {{ knp_pagination_render(pagination) }}
+                                </ul>
+                            </div>
+                        </div><!--/.container-->
+
+
+                    </div>
+
+                {% endif %}
+                {% if user is not defined %}
+                    {% block myJavascript %}
+                        <script type="text/javascript">
+                            alert("This Cours Already Exist");
+                            history.go(-1);
+                        </script>
+
+                    {% endblock %} 
+                {% endif %}
+
+            </div>
+        </div>
+    </section>
+
+
+
+{% endblock %}

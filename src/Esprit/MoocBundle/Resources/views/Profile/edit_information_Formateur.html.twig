@@ -1,0 +1,35 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block fos_user_content %}
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1" align="left" >
+                    {% trans_default_domain 'FOSUserBundle' %}
+                    <legend><b> Edit Your Profile 2 </b></legend>
+                    {{ form_start(form, { 'action': path('edit_information_formateur',{role:"Apprenant"}), 'attr': { 'class': 'form' } }) }}
+                    {{ form_widget(form.specialite,{'attr': {'class': 'form-control input-lg'}}) }}<br>
+                    {{ form_widget(form.googlePlus,{'attr': {'class': 'form-control input-lg'}}) }}<br>
+                    {{ form_widget(form.siteWeb,{'attr': {'class': 'form-control input-lg'}}) }}<br>
+                    {{ form_widget(form.sexe,{'attr': {'class': 'form-control input-lg'}}) }}<br>
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    {{ form_widget(form.aPropos) }}<br>
+                    {{ form_widget(form.biographie) }}<br>
+                    {{ form_widget(form.miniBiographie) }}<br>
+                    <div>
+                        <input type="submit" value="Finish" class='btn-primary' />
+                    </div>
+                    {{ form_widget(form._token) }} {{ form_end(form, {'render_rest': false}) }}
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>            
+        </div>
+    </div>
+</section>
+{% endblock fos_user_content %}
+

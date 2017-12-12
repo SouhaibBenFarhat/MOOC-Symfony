@@ -1,0 +1,125 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block content %}    
+    <section id="portfolio">    
+<div id="wrapper">
+        <!-- /. NAV TOP  -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+       
+        <!-- /. NAV TOP  -->
+   <div class="container-fluid">
+    <div class="row">
+        
+        <div class="col-sm-2">
+           
+            <!-- Left column -->
+            <a href="{{ path('espace_admin') }}"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
+
+            <hr>
+
+            <ul class="nav nav-stacked">
+                       <li>
+                                <a href="#" id="listeApp"><i class="fa fa-user"></i>liste des apprenants</a>
+                                
+                                <script type="text/javascript">
+      $(document).ready(function(){
+      $('#listeApp').click(function() {
+            $( "#page-inner" ).load("{{ path('admin_liste_apprenant') }}");
+      });
+      });
+</script>
+                            </li>
+                      <li>
+                                <a href="#" id="listeForm"><i class="fa fa-users "></i>liste des formateurs</a>
+                           
+                                 <script type="text/javascript">
+      $(document).ready(function(){
+      $('#listeForm').click(function() {
+            $( "#page-inner" ).load("{{path('admin_liste_formateur')}}");
+      });
+      });
+</script>
+                        </li>
+                         <li>
+                                <a href="#" id="listeEntre"><i class="glyphicon glyphicon-home"></i>Entreprise</a> 
+                       
+                                <script type="text/javascript">
+      $(document).ready(function(){
+      $('#listeEntre').click(function() {
+            $( "#page-inner" ).load("{{path('admin_liste_entrprises')}}");
+      });
+      });
+</script>
+                        </li>
+<li>
+                                <a href="#" id="listeIns"><i class="glyphicon glyphicon-check"></i>valider l'inscription des   entreprises</a>
+                            
+                                <script type="text/javascript">
+      $(document).ready(function(){
+      $('#listeIns').click(function() {
+            $( "#page-inner" ).load("{{path('admin_liste_inscri_entreprise')}}");
+      });
+      });
+</script>
+                            </li>
+                        
+                       <li>
+                                <a href="#" id="listeMembre"><i class="fa fa-users"></i>liste des membres  de comite</a>
+                        
+                                  <script type="text/javascript">
+      $(document).ready(function(){
+      $('#listeMembre').click(function() {
+            $( "#page-inner" ).load("{{path('admin_liste_membre_comite')}}");
+      });
+      });
+</script>
+                        </li>
+                        
+                  
+                     
+                            <li>
+                        <a href="#" id="listeDisp"><i class="glyphicon glyphicon-book"></i>Liste discipline</a>
+                    <script type="text/javascript">
+      $(document).ready(function(){
+      $('#listeDisp').click(function() {
+            $( "#page-forum" ).load("{{ path('list_discipline') }}");
+      });
+      });
+</script>
+                            
+                            
+                            </li>
+                         <li>
+                        <a href="#" id="ajoutForm"><i class="glyphicon glyphicon-plus "></i>Ajouter Forum</a>
+          <script type="text/javascript">
+      $(document).ready(function(){
+      $('#ajoutForm').click(function() {
+            $( "#page-forum" ).load("{{path('ajouter_forum')}}");
+      });
+      });
+</script>  
+                         
+                         
+                         </li>
+                              </ul>
+     
+        </div><br>
+        <div id="page-forum"></div>
+    </div>
+</div>
+
+    </div>
+      <div id="page-inner">
+          
+      </div>
+                          
+                            
+</section>
+  {% endblock %}

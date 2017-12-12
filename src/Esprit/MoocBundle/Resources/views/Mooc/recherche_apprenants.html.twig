@@ -1,0 +1,86 @@
+ <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+
+    <div class="container conteneur-page-invitation">
+	<br>
+             <div class="conteneur-msg">
+       <div class="span12">
+            <div class="form-search form-horizontal pull-right">
+                <div class="input-append span12">
+                    <input type="text" class="form-control" placeholder="Search" name="nom" id="nom">
+                <script type="text/javascript">
+      $(document).ready(function(){
+      $('#nom').keyup(function() {
+          nom =$('#nom').val();
+       $.ajax({
+            method: "POST",
+            url: "{{ path('rechercher_apprenant')}}",
+            data: { nom: nom },
+            beforeSend: function () {
+                      console.log("ça charge"); 
+                    },
+            success: function (data) {
+                 console.log("ok ok ") ;
+                    
+                   $('#page-2').html(data);
+                  
+             
+                    
+                            
+                    }
+              });
+                    });
+      });
+</script>
+                </div>
+            </div>
+        </div>
+        </div>
+      
+	{#<table class="table table-hover table-invitations container">
+		<thead>
+			<tr>
+                <th><center>nom d'un apprenant </center></th>
+				<th></th>
+			</tr>
+		</thead>
+        <tbody>#}
+        <div class="col-md-12">
+            {%for a in pagination%}
+		{#	<tr>
+				<td><center><a href="#">{{a.username}}</a></center></td>
+				<td>
+							<a href="{{ path('supprimer_apprenant',{id:a.id})}}">
+								<button class="btn btn-warning"  id="btn-supp"><span class="glyphicon glyphicon-trash"> </span> Supprimer</button>
+							</a>	
+
+	       
+				</td>
+			</tr>#}
+            
+                             <div class="col-sm-6 col-md-4">
+                                  <div class="thumbnail">
+                           
+                           <img src="{{asset ('uploads/photos/man4.jpg')}}" alt="website template image" class="img-responsive"/>
+                               
+                             
+                                   
+                                    <h2><p><i class="fa fa-user"></i> <small><a href="{{ path('fos_user_profile_show_with_id',{id:a.id})}}">{{a.username}}</a></p></h2>
+                                  {% if(a.enabled=='1')%} 
+                                        <h3> <a href="{{ path('disable_apprenant',{id:a.id})}}"><i class="glyphicon glyphicon-lock"></i></a></h3>
+                                    {%endif %}
+                                   {% if(a.enabled=='0')%} 
+                                        <h3> <a href="{{ path('enable_apprenant',{id:a.id})}}"><i class="glyphicon glyphicon-ok"></i></a></h3>
+                                    {%endif %}
+       
+
+                          
+                                    
+                                  </div>
+                             </div>
+                        
+            
+            {%endfor %}
+             </div>
+    </div>
+
+ 

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>{% block titre %}{% endblock %}</title>
+        <link href="{{asset ('bundles/espritmooc/css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/font-awesome.min.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/prettyPhoto.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/animate.min.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/main.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/responsive.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/sweet-alert.css')}}" rel="stylesheet">
+        <link rel="stylesheet" href="font-awesome-animation.min.css">
+        {#       <link href="{{asset ('bundles/espritmooc/css/basic.css')}}" rel="stylesheet" />#}
+        <!--CUSTOM MAIN STYLES-->
+        <link href="{{asset ('bundles/espritmooc/css/custom.css')}}" rel="stylesheet" />
+        <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+        {#              <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>#}
+        <script>
+
+            $(document).on('change', '.btn-file :file', function () {
+                var input = $(this),
+                        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                input.trigger('fileselect', [numFiles, label]);
+            });
+
+            $(document).ready(function () {
+                $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+
+                    var input = $(this).parents('.input-group').find(':text'),
+                            log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                    if (input.length) {
+                        input.val(log);
+                    } else {
+                        if (log)
+                            alert(log);
+                    }
+
+                });
+            });
+
+        </script>
+        <script>
+
+            $(document).on('change', '.btn-file :file', function () {
+                var input = $(this),
+                        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                input.trigger('fileselect', [numFiles, label]);
+            });
+
+            $(document).ready(function () {
+                $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+
+                    var input = $(this).parents('.input-group').find(':text'),
+                            log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                    if (input.length) {
+                        input.val(log);
+                    } else {
+                        if (log)
+                            alert(log);
+                    }
+
+                });
+            });
+
+        </script>
+
+
+
+
+
+    </head><!--/head-->
+
+
+    <body>
+
+        <header id="header">
+            <br><br>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ path('esprit_mooc_home')}}"><img src="{{asset('bundles/espritmooc/images/logo.png')}}" alt="logo"></a>
+                </div>
+                
+                <div class="collapse navbar-collapse nav-wil">
+                    <ul class="nav navbar-nav navbar-right">
+                    {% if not is_granted('ROLE_SUPER_ADMIN')%}
+                        
+                                {% if is_granted('ROLE_APPRENANT') %}
+                               
+                            <li>
+                                <a href="{{ path('publier_ma_application')}}">Publier ma application</a>
+                            </li>
+                          
+                            {% endif %}
+                            <li>
+                                <a href="{{path('esprit_mooc_cours')}}">Nos Cours</a>
+
+                           </li>
+
+                           <li>
+                                <a href="#">Nos partenaires</a>
+                             </li>
+                            <li>
+                                <a href="{{ path('my_app_mail_sendpage') }}">Contactez Nous</a>
+                            </li>
+                            <li><a href="{{path('nos_forum')}}">Nos forums</a></li>
+
+                        
+                        {% if  not app.user %}
+                            <li>
+                                <a href="{{ path('fos_user_security_login') }}" class="btn btn-primary" data-toggle="modal" data-target="">S'authentifier</a></li>
+                            <li>
+                                <a href="{{path ('choix_inscription')}}" class="btn btn-primary">S'inscrire</a></li>
+
+                        {% endif %}
+                       {% if   app.user %}
+                             <li>
+                                                  <div class="user-img-div"  data-toggle="modal" data-target="#myModal">
+                            {% if app.user.userPhoto is not null %}
+                                <a href=""     >    <img src="{{asset('uploads/userPhoto/' ~ app.user.userPhoto.path )}}" class="img-circle" /></a>
+                                {% else %}
+                                 <a href=""     >    <img src="{{asset('uploads/userPhoto/user4.jpg')}}" class="img-circle" /></a>
+                                 {% endif %}
+                        </div>
+                              {% if is_granted('ROLE_FORMATEUR') %}
+                          
+                              <li class="dropdown">
+                               
+                                  <a href="#" data-toggle="modal" data-target=""> <i class="glyphicon glyphicon-comment"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                    <a href="{{ path('mes_discussion') }}"> Mes discussions</a></li>
+                                    <li>
+                        <a href="{{ path('mes_sujets') }}" id="">Mes Sujets</a>
+                    </li>
+                               
+                                </ul>
+                             </li>
+                                {% endif%}
+                              <li class="dropdown">
+                            
+                                <a href="#"   data-toggle="modal" data-target=""><i class="glyphicon glyphicon-cog"></i></a>
+                                <ul class="dropdown-menu">
+                            
+                                 {% if is_granted('ROLE_FORMATEUR') %}
+                                    <li><a href="{{ path('fos_user_profile_show')}}"><i class="fa fa-user"></i>Mon Profil</a></li>
+                                    <li><a href="{{ path('mes_cours') }}"><i class="fa fa-book"></i>Mes Cours</a></li>
+                                    <li><a href="{{path('formateur_ajout_cours')}}">Ajouter Cours</a></li>
+                                    <li><a href="{{path('formateur_liste_entreprises')}}">Entreprises</a></li>
+                                    <li><a href="{{path('formateur_liste_invi')}}">Demandes Entreprises</a></li>
+             
+                                    
+                                    
+                            {% endif %}
+                              {% if is_granted('ROLE_APPRENANT') %}
+                 
+                                    <li><a href="{{ path('fos_user_profile_show')}}"><i class="fa fa-user"></i>Mon Profil</a></li>
+                                    <li><a href="{{ path('apprenant_bibliotheque') }}"><i class="fa fa-book"></i>Ma Bibliotheque</a></li>
+                                 
+                                
+             
+                                    
+                                    
+                            {% endif %}
+                            
+                            {% if is_granted('ROLE_ENTREPRISE') %}
+                                   
+                                    <li><a href="{{ path('fos_user_profile_show')}}"><i class="fa fa-user"></i>Mon Profil</a></li>
+                                    <li><a href="{{path('liste_mes_formateurs')}}"><i class="fa fa-book"></i>Mes Formateurs</a></li>
+                                    <li><a href="{{path('entreprise_liste_invi')}}">Invitations des Foramteurs</a></li>
+                                    <li><a href="{{path('liste_autre_formateurs')}}">Liste des Formateurs</a></li>
+                                  
+             
+                                    
+                                    
+                            {% endif %}
+                            
+                             {% if is_granted('ROLE_MEMBRE_COMITE') %}
+                                   
+                                    <li><a href="#"><i class="fa fa-user"></i>Mon Profil</a></li>
+                                    <li><a href="{{path('comite_demande_inscr_formateur')}}"><i class="fa fa-book"></i> Formateurs A Valider </a></li>
+                                    <li><a href="{{path('entreprise_liste_invi')}}">Cours A Valider</a></li>
+                 
+                            {% endif %}
+                            {% if not is_granted('ROLE_SUPER_ADMIN')%}
+                             <li><a href="{{ path('fos_user_security_logout') }}">Log Out</a></li> 
+                               {% endif %}
+                            </ul>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                              {% if  is_granted('ROLE_SUPER_ADMIN')%}
+                           <li><a href="{{ path('fos_user_security_logout') }}"><i class="glyphicon glyphicon-off"></i></a></li>
+                          {% endif %}
+                             </ul>
+                </div>
+                             
+            </div><!--/.container-->
+
+        </nav><!--/nav-->
+
+    </header><!--/header-->
+    <!---->
+  <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modifier</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form" method="post" action="{{ path('changer_photo') }}"  enctype="multipart/form-data">
+                        <label class="pull-left">Changer votre photo</label><br><br>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="file" accept="image/gif, image/jpeg, image/png"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="your picture" required>
+
+                        </div><br>
+                        <input type="submit" class=" pull-left btn-primary" value="Modifier">
+                    </form><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block fos_user_content %}  {% endblock fos_user_content %}
+{% block change_password %}{% endblock %}
+{% block content %} {% endblock %}
+{% block registration %}{% endblock %}
+{% block profile %}{% endblock %}
+{% block dashboard_admin %}{% endblock %}
+<!--/content-->
+<footer id="footer" class="midnight-blue">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <i class="fa fa-code"></i>with<i class="fa fa-heart-o"></i>
+                &copy; 2016 DEV SQUAD. All Rights Reserved.
+            </div>
+            <div class="col-sm-6">
+                <ul class="pull-right">
+                    {# <li><a href="#">Home</a></li>
+                     <li><a href="#">About Us</a></li>
+                     <li><a href="#">Faq</a></li>
+                     <li><a href="#">Contact Us</a></li>#}
+                    <li>{{ facebookButton() }}</li>
+                    <li>{{ twitterButton() }}</li>
+                    <li>{{ googleplusButton() }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer><!--/#footer-->
+
+<script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+<script src="{{asset ('bundles/espritmooc/js/bootstrap.min.js')}}"></script>
+<script src="{{asset ('bundles/espritmooc/js/jquery.prettyPhoto.js')}}"></script>
+<script src="{{asset ('bundles/espritmooc/js/jquery.isotope.min.js')}}"></script>
+{#<script src="{{asset ('bundles/espritmooc/js/main.js')}}"></script>#}
+<script src="{{asset ('bundles/espritmooc/js/wow.min.js')}}"></script>
+<script src="{{asset('bundles/espritmooc/js/notify.js')}}"></script>
+
+
+<script src="{{asset ('bundles/espritmooc/js/jsConfig.js')}}"></script>
+<script src="{{asset ('bundles/espritmooc/js/sweet-alert.min.js')}}"></script>
+<script src="{{asset ('bundles/espritmooc/js/jquery.oLoader.js')}}"></script>
+<script src="{{asset ('bundles/espritmooc/js/jquery-clockpicker.min.js')}}"></script>
+{#<script src="{{asset ('bundles/espritmooc/js/javascript.js')}}"></script>#}
+<script src="{{asset ('bundles/espritmooc/js/modernizr.js')}}"></script>
+<!-- METISMENU SCRIPTS -->
+<script src="{{asset ('bundles/espritmooc/js/jquery.metisMenu.js')}}"></script>
+<!-- CUSTOM SCRIPTS -->
+{#<script src="{{asset ('bundles/espritmooc/js/custom.js')}}"></script>#}
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+<script>
+</script>
+</body>
+</html>

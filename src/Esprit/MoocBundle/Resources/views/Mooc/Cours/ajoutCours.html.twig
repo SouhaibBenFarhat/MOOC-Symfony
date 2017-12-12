@@ -1,0 +1,109 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block content %}
+    <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+    <script>
+
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this),
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
+        });
+
+        $(document).ready(function () {
+            $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+
+                var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                if (input.length) {
+                    input.val(log);
+                } else {
+                    if (log)
+                        alert(log);
+                }
+
+            });
+        });
+
+    </script>
+    <br>
+
+    <section id="portfolio" style="margin-left: 30%">
+        <div class="container" id="wrap">
+            <div class="row" >   
+
+                <form action="{{ path('formateur_ajout_cours') }}" method="POST"  class="form" role="form" enctype="multipart/form-data">   
+
+                    <div class="col-md-5 col-md-offset-1" align="center" >
+                        <legend>Ajout Cours</legend>
+                        <input type="text" class="form-control" name="titre" placeholder="titre"  required> <br>
+                        <select class="form-control" name="discipline" required>
+                            <option value="">--Select One--</option>
+                            {% for d in discipline %}
+                                <option value="{{d.idDiscipline}}">{{d.nomDiscipline }}</option>
+                            {% endfor %}
+                        </select> <br>
+                        {#   <input type="file" name="prenom" value="" class="form-control input-lg" placeholder="curriculum vitae"  /></br>#}
+
+
+
+
+                        <select class="form-control " name="niveau" required>
+                            <option value="">--Select One--</option>
+                            <option value="Facile">Facile</option>
+                            <option value="Normal">Normale</option>
+                            <option value="Difficile">Difficile</option>
+                            <option value="Extreme">Extreme</option>
+                        </select> <br>
+
+                        <input type="number" class="form-control" name="duree" placeholder="durée cours en Heurs" required><br>
+                    </div>
+
+                    <div class="col-md-7 col-md-offset-1">
+                        <textarea  class="form-control" name="introduction" placeholder="Introduction..." required rows="4"></textarea><br>
+                        <label class="">Description</label> <br>
+                        <div class="span7">
+                            <textarea  class="ckeditor" name="description" placeholder="description" required rows="10"></textarea><br>
+                        </div>
+                        <label class="">Objectif</label> <br>
+                        <div class="span7">
+                            <textarea class="ckeditor" name="objectif" placeholder="objectif" required rows="10"></textarea><br>
+                        </div>
+                        <label class="">Prerequis</label> <br>
+                        <div class="span7">
+                            <textarea class="ckeditor" name="prerequis" placeholder="prerequis cour" required rows="10"></textarea><br>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-md-offset-1" align="center" >
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="file" accept="video/*"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="Video" required>
+                        </div>
+                        <br>
+                        {% for flashMessage in app.session.flashbag.get('notice') %}
+                            <div class="alert alert-success">
+                                {{ flashMessage }}
+                            </div>
+
+                        {% endfor %}
+                        <br />
+                        <input type="submit" name="" value="Finish" class="btn btn-primary">
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+
+
+
+    </section>
+{% endblock %}

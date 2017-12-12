@@ -1,0 +1,551 @@
+esprit_mooc_home:
+    path:     /home
+    defaults: { _controller: EspritMoocBundle:Mooc:home }
+    
+esprit_mooc_sign_in:
+    path:     /sign_in_apprenant
+    defaults: { _controller: EspritMoocBundle:Apprenant:signInApprenant }
+    
+esprit_mooc_cours:
+    path:     /cours
+    defaults: { _controller: EspritMoocBundle:Cours:cours }
+    
+esprit_mooc_details_cours:
+    path:     /cours_details/{idCours}
+    defaults: { _controller: EspritMoocBundle:Cours:courseDetails }
+    
+esprit_mooc_entreprises:
+    path:     /entreprises
+    defaults: { _controller: EspritMoocBundle:Mooc:entreprises }
+    
+esprit_mooc_chapitre:
+    path:     /chapitre
+    defaults: { _controller: EspritMoocBundle:Apprenant:chapitre }
+
+esprit_mooc_sign_up_entreprises:
+    path:     /sign_up_entreprises
+    defaults: { _controller: EspritMoocBundle:Entreprise:signUpEntreprises }
+    
+admin_liste_inscri_entreprise:
+    path:     /liste_ins_entreprise
+    defaults: { _controller: EspritMoocBundle:Admin:listeInsEntreprise }
+    
+admin_accepter_entreprise:
+    path: /accepter_entreprise
+    defaults: { _controller: EspritMoocBundle:Admin:accepterEntreprise }
+    
+admin_refuser_entreprise:
+     path: /refuser_entreprise
+     defaults: { _controller: EspritMoocBundle:Admin:refuserEntreprise }
+    
+admin_liste_apprenant:
+    path:     /liste_apprenant
+    defaults: { _controller: EspritMoocBundle:Admin:listeApprenant }
+    
+rechercher_apprenant:
+    path:     /rechercher_apprenant
+    defaults: { _controller: EspritMoocBundle:Admin:rechercherApprenant}  
+
+supprimer_apprenant:
+    path: /supprimer_apprenant/{id}
+    defaults: {_controller: EspritMoocBundle:Admin:supprimerApprenant }
+
+disable_apprenant:
+    path: /disable_apprenant/{id}
+    defaults: {_controller: EspritMoocBundle:Admin:disableApprenant }
+enable_apprenant:
+    path: /enable_apprenant/{id}
+    defaults: {_controller: EspritMoocBundle:Admin:enableApprenant }
+
+    
+admin_liste_entrprises:
+    path:     /liste_entreprises
+    defaults: { _controller: EspritMoocBundle:Admin:listeEntreprises }
+
+disable_entreprise:
+    path:     /disable_entrprise/{id}
+    defaults: { _controller: EspritMoocBundle:Admin:disableEntreprise}
+    
+enable_entreprise:
+    path:     /supprimer_entrprise/{id}
+    defaults: { _controller: EspritMoocBundle:Admin:enableEntreprise}
+  
+#supprimer_entreprise:
+#    path:     /supprimer_entrprise/{id}
+#    defaults: { _controller: EspritMoocBundle:Admin:supprimerEntreprise}
+#    
+rechercher_entreprise:
+    path:     /rechercher_entreprise
+    defaults: { _controller: EspritMoocBundle:Admin:rechercherEntreprise}
+
+admin_liste_formateur:
+    path:     /liste_formateur
+    defaults: { _controller: EspritMoocBundle:Admin:listeFormateurs }
+
+disable_formateur:
+    path: /disable_formateur/{id}
+    defaults: {_controller: EspritMoocBundle:Admin:disableFormateur }
+enable_formateur:
+    path: /enable_formateur/{id}
+    defaults: {_controller: EspritMoocBundle:Admin:enableFormateur }
+  
+#supprimer_formateur:
+#    path: /supprimer_formateur/{id}
+#    defaults: {_controller: EspritMoocBundle:Admin:supprimerFormateur }
+#    
+rechercher_formateur:
+    path:     /rechercher_formateur
+    defaults: { _controller: EspritMoocBundle:Admin:rechercherFormateur}
+    
+admin_liste_membre_comite:
+    path:     /liste_membre_comite
+    defaults: { _controller: EspritMoocBundle:Admin:listeMembreComite }
+
+supprimer_membre_comite:
+    path: /supprimer_membre_comite/{id}
+    defaults: {_controller: EspritMoocBundle:Admin:supprimerMembreComite }
+    
+rechercher_formateur:
+    path:     /rechercher_membre_comite
+    defaults: { _controller: EspritMoocBundle:Admin:rechercherMembreComite}
+
+   
+apprenant_bibliotheque:
+    path:     /bibliotheque
+    defaults: { _controller: EspritMoocBundle:Apprenant:bibliotheque }
+
+apprenant_ajout_cour:
+    path:     /ajout/{id}
+    defaults: { _controller: EspritMoocBundle:Apprenant:ajoutBib }
+
+apprenant_supprim_cour:
+    path:     /supprimer/{id}
+    defaults: { _controller: EspritMoocBundle:Apprenant:supprimerBibliotheque }
+
+choix_inscription:
+    path:     /choix_inscription
+    defaults: { _controller: EspritMoocBundle:Mooc:choixInscription }
+    
+inscription:
+    path:     /inscription/{role}
+    defaults: { _controller: EspritMoocBundle:Mooc:inscription }    
+    
+apprenant_sign_up:
+    path:     /sign_up_app
+    defaults: { _controller: EspritMoocBundle:Apprenant:signUpApprenant }
+    
+formateur_ajout_cours:
+    path:     /ajoutCours
+    defaults: { _controller: EspritMoocBundle:Formateur:ajoutCours }
+    
+formateur_liste_invi:
+    path:     /liste_Invit_To_Formateur
+    defaults: { _controller: EspritMoocBundle:Formateur:listeInviToFormateur }
+      
+formateur_profil:
+    path:     /formateur_profil
+    defaults: { _controller: EspritMoocBundle:formateur:profilFormateur }
+    
+formateur_liste_entreprises:
+    path:      /formateur_liste_Entreprises
+    defaults: {_controller: EspritMoocBundle:formateur:listeEntreprises}
+formateur_envoyer_invitation_entreprise:
+    path:     /formateur_envoyer_invitation_entreprise/{idEntreprise}
+    defaults: { _controller: EspritMoocBundle:Formateur:envoyerInvitationToEntreprise }
+    
+formateur_accepter_entreprise:
+    path:     /formateur_accepter_entreprise
+    defaults: { _controller: EspritMoocBundle:Formateur:accepterEntreprise }
+
+formateur_refuser_entreprise:
+    path:     /formateur_refuser_entreprise
+    defaults: { _controller: EspritMoocBundle:Formateur:refuserEntreprise }    
+
+formateur_signUp:
+    path:     /sign_up_formateur
+    defaults: { _controller: EspritMoocBundle:Formateur:signUpFormateur }
+
+entreprise_signUp:
+    path:     /sign_up_entreprise
+    defaults: { _controller: EspritMoocBundle:Entreprise:signUpEntreprise }
+
+
+entreprise_liste_invi:
+    path:     /entreprise_liste_invi
+    defaults: { _controller: EspritMoocBundle:Entreprise:listeInviToEntreprise }
+    
+    
+#comite_liste_cours_a_valider:
+#    path:     /cours_a_valider
+#    defaults: { _controller: EspritMoocBundle:Comite:listecoursAValider }
+#    
+comite_demande_inscr_formateur:
+    path:     /liste_comite_demande_inscr_formateur
+    defaults: { _controller: EspritMoocBundle:Comite:listeDemandeInscriFomrateur }
+accepter_inscr_formateur:
+    path:     /accepter_inscr_formateur/{id}
+    defaults: { _controller: EspritMoocBundle:Comite:accepterFormateur }
+
+refuser_inscr_formateur:
+    path:     /refuser_inscr_formateur/{id}
+    defaults: { _controller: EspritMoocBundle:Comite:refuserFormateur }
+       
+espace_admin:
+    path:     /espace_admin
+    defaults: { _controller: EspritMoocBundle:Admin:espaceAdmin }
+
+#espace_apprenant:
+#    path:     /espace_apprenant
+#    defaults: { _controller: EspritMoocBundle:Apprenant:espaceApprenant }
+#    
+#espace_formateur:
+#    path:     /espace_formateur
+#    defaults: { _controller: EspritMoocBundle:Formateur:espaceFormateur }
+#    
+espace_membre_comite:
+    path:     /espace_membre_comite
+    defaults: { _controller: EspritMoocBundle:Comite:espaceMembreComite }
+
+espace_entreprise:
+    path:     /espace_entreprise
+    defaults: { _controller: EspritMoocBundle:Entreprise:espaceEntreprise }
+
+information_formateur:
+    path:     /information_formateur
+    defaults: { _controller: EspritMoocBundle:Formateur:informationFormateur }    
+    
+information_entreprise:
+    path:     /information_entreprise
+    defaults: { _controller: EspritMoocBundle:Entreprise:informationEntreprise }    
+
+edit_information_entreprise:
+    path:     /edit_information_entreprise
+    defaults: { _controller: EspritMoocBundle:Entreprise:editInformationEntreprise }    
+
+liste_mes_formateurs:
+    path:     /liste_mes_formateurs
+    defaults: { _controller: EspritMoocBundle:Entreprise:listeMesFormateurs }  
+    
+liste_autre_formateurs:
+    path:     /liste_autre_formateurs
+    defaults: { _controller: EspritMoocBundle:Entreprise:listeAutreFormateurs }   
+    
+edit_information_formateur:
+    path:     /edit_information_formateur
+    defaults: { _controller: EspritMoocBundle:Formateur:editInformationFormateur }
+    
+my_app_mail_succ:
+    path: /succ
+    defaults: { _controller: EspritMoocBundle:Mooc:confirmationMail }
+ 
+my_app_mail_form:
+    path: /contactus
+    defaults: { _controller: EspritMoocBundle:Mooc:contactus }
+
+my_app_mail_sendpage:
+    path: /sendmail
+    defaults: { _controller: EspritMoocBundle:Mooc:sendMail }
+ 
+quizz_chapitre:
+    path: /quizzChapitre/{idCours}
+    defaults: { _controller: EspritMoocBundle:Formateur:ajouterQuizzChapitre }    
+    
+quizz_cours:
+    path: /quizzCours/{idCours}
+    defaults: { _controller: EspritMoocBundle:Formateur:ajouterQuizzCours }
+
+creer_quizz_cours:
+    path: /creerQuizz_Cours
+    defaults: { _controller: EspritMoocBundle:Formateur:creerQuizzCours }
+    
+creer_quizz_chapitre:
+    path: /creerQuizz_Chapitre
+    defaults: { _controller: EspritMoocBundle:Formateur:creerQuizzChapitre }    
+    
+sauvegarder_quizz_cours:
+    path: /sauvegarder_quizz_cours
+    defaults: { _controller: EspritMoocBundle:Formateur:sauvegarderQuizzCours }
+    
+sauvegarder_quizz_chapitre:
+    path: /sauvegarder_quizz_chapitre
+    defaults: { _controller: EspritMoocBundle:Formateur:sauvegarderQuizzChapitre }    
+
+afficher_quizz_cours:
+    path: /afficher_quizz_cours/{idcours}
+    defaults: { _controller: EspritMoocBundle:Cours:afficherQuizz }
+
+afficher_quizz_chapitre:
+    path: /afficher_quizz_chapitre/{idChapitre}
+    defaults: { _controller: EspritMoocBundle:Cours:afficherQuizzChapitre }
+
+calculer_score_quizz_cours:
+    path: /calculer_score_quizz_cours
+    defaults: { _controller: EspritMoocBundle:Cours:calculerScoreQuizzCours }
+    
+calculer_score_quizz_chapitre:
+    path: /calculer_score_quizz_chapitre
+    defaults: { _controller: EspritMoocBundle:Cours:calculerScoreQuizzChapitre } 
+    
+correction_quizz_cours:
+    path: /correction_quizz_cours/{idCours}
+    defaults: { _controller: EspritMoocBundle:Cours:correctionQuizzCours }
+
+    
+correction_quizz_chapitre:
+    path: /correction_quizz_chapitre/{idChapitre}
+    defaults: { _controller: EspritMoocBundle:Cours:correctionQuizzChapitre }
+
+ajouter_chapitre:
+    path: /ajouter_chapitre/{idCours}
+    defaults: { _controller: EspritMoocBundle:Formateur:ajouterChapitre }
+    
+afficher_chapitre:
+    path: /afficher_chapitre/{idChapitre}/{idCours}
+    defaults: { _controller: EspritMoocBundle:Cours:afficherChapitre }
+    
+progression_chapitre:
+    path: /progression_chapitre/{idChapitre}/{idCours}
+    defaults: { _controller: EspritMoocBundle:Cours:progressionChapitre }    
+    
+progression_cours:
+    path: /progression_cours/{idCours}/{idChapitre}
+    defaults: { _controller: EspritMoocBundle:Cours:progressionCours }    
+    
+
+    
+fos_user_profile_show_with_id:
+    path: /show_profile/{id}
+    defaults: { _controller: FOSUserBundle:Profile:showWithId }
+    
+_imagine:
+    resource: .
+    type:     imagine
+    
+cours_by_discipline:
+    path: /cours_by_discipline/{idDiscipline}
+    defaults: { _controller: EspritMoocBundle:Cours:coursByDiscipline }    
+
+chercher_cours:
+    path: /chercher_cours
+    defaults: { _controller: EspritMoocBundle:Cours:chercherCours }
+
+afficher_historique:
+    path: /historique
+    defaults: { _controller: EspritMoocBundle:Mooc:afficherHistorique }    
+
+envoyer_appreciation:
+    path: /envoyer_appreciation/{idCours}
+    defaults: { _controller: EspritMoocBundle:Apprenant:appreciation }     
+forum:
+    path: /forum/{idDiscipline}
+    defaults: { _controller: EspritMoocBundle:Forum:forum }          
+publier_sujet:
+    path: /publier_sujet/{idForum}
+    defaults: { _controller: EspritMoocBundle:Forum:sujet }  
+
+publier_sujet_list:
+    path: /publier_sujet
+    defaults: { _controller: EspritMoocBundle:Forum:publierSujetList }      
+    
+afficher_sujet:
+    path: /afficher_sujet/{idSujet}
+    defaults: { _controller: EspritMoocBundle:Forum:afficherSujet }   
+ajouter_message:
+    path: /ajouter_message/{idSujet}
+    defaults: { _controller: EspritMoocBundle:Forum:ajouterMessage }   
+nos_forum:
+    path: /nos_forum
+    defaults: { _controller: EspritMoocBundle:Forum:nosForum }  
+mes_sujets:
+    path: /mes_sujets
+    defaults: { _controller: EspritMoocBundle:Forum:mesSujets } 
+
+chercher_forum:
+    path: /chercher_forum
+    defaults: { _controller: EspritMoocBundle:Forum:chercherForum }     
+
+supprimer_sujet:
+    path: /supprimer_sujet/{idSujet}
+    defaults: { _controller: EspritMoocBundle:Forum:supprimerSujet }         
+ 
+supprimer_message:
+    path: /supprimer_message/{idMessage}
+    defaults: { _controller: EspritMoocBundle:Forum:supprimerMessage }    
+ 
+modifier_sujet:
+    path: /modifier_sujet/{idSujet}
+    defaults: { _controller: EspritMoocBundle:Forum:modifierSujet }         
+ 
+modifier_message:
+    path: /modifier_message/{idMessage}
+    defaults: { _controller: EspritMoocBundle:Forum:modifierMessage }   
+   
+mes_interventions:
+    path: /mes_intervensions
+    defaults: { _controller: EspritMoocBundle:Forum:mesInterventions }  
+
+mes_notifications:
+    path: /mes_notifications
+    defaults: { _controller: EspritMoocBundle:Forum:mesNotifications }
+    
+like_sujet:
+    path: /like/{idSujet}
+    defaults: { _controller: EspritMoocBundle:Forum:likeSujet}    
+
+vider_historique:
+    path: /vider_historique
+    defaults: { _controller: EspritMoocBundle:Cours:viderHistorique}      
+    
+like_cours:
+    path: /like_cours/{idCours}
+    defaults: { _controller: EspritMoocBundle:Cours:likeCours} 
+changer_photo:
+    path: /changer_photo
+    defaults: { _controller: EspritMoocBundle:Mooc:changerPhoto} 
+    
+envoyer_message:
+    path: /envoyer_message/{idDestinataire}/{idSujet}
+    defaults: { _controller: EspritMoocBundle:Mooc:envoyerMessage}     
+    
+mes_discussion:
+    path: /mes_discussion
+    defaults: { _controller: EspritMoocBundle:Mooc:mesDiscussion}     
+
+afficher_discussion:
+    path: /afficher_discussion/{idDiscussion}
+    defaults: { _controller: EspritMoocBundle:Mooc:afficherDiscussion}     
+
+envoyer_message_discussion:
+    path: /envoyer_message_discussion/{idDestinataire}/{idDiscussion}
+    defaults: { _controller: EspritMoocBundle:Mooc:envoyerMessageDiscussion}         
+    
+suivie_cours:
+    path: /suivie_cours/{idCours}
+    defaults: { _controller: EspritMoocBundle:Cours:suivieCours}          
+
+supprimer_suivie:
+    path: /supprimer_suivie/{idCours}
+    defaults: { _controller: EspritMoocBundle:Cours:supprimerSuivie} 
+
+
+ajouter_forum:
+    path: /ajouter_forum
+    defaults: { _controller: EspritMoocBundle:Forum:ajouterForum} 
+ 
+ajouter_discipline:
+    path: /ajouter_discipline
+    defaults: { _controller: EspritMoocBundle:Mooc:ajouterDiscipline}     
+
+list_discipline:
+    path: /list_discipline
+    defaults: { _controller: EspritMoocBundle:Mooc:listeDiscipline}   
+    
+
+
+modifier_discipline:
+    path: /modifier_discipline/{idDiscipline}
+    defaults: { _controller: EspritMoocBundle:Mooc:modifierDiscipline}         
+    
+supprimer_discipline:
+    path: /supprimer_discipline/{idDiscipline}
+    defaults: { _controller: EspritMoocBundle:Mooc:supprimerDiscipline}       
+    
+mes_cours:
+    path: /mes_cours
+    defaults: { _controller: EspritMoocBundle:Formateur:mesCours}      
+    
+afficher_cours:
+    path: /afficher_cours/{idCours}
+    defaults: { _controller: EspritMoocBundle:Cours:afficherCours}         
+    
+modifier_chapitre:
+    path: /modifier_chapitre/{idChapitre}
+    defaults: { _controller: EspritMoocBundle:Cours:modifierChapitre}             
+
+modifier_cours:
+    path: /modifier_cours/{idCours}
+    defaults: { _controller: EspritMoocBundle:Cours:modifierCours}      
+
+modifier_quizz_chapitre:
+    path: /modifier_quizz_chapitre/{idChapitre}
+    defaults: { _controller: EspritMoocBundle:Cours:modifierQuizzChapitre}   
+    
+modifier_quizz_cours:
+    path: /modifier_quizz_cours/{idCours}
+    defaults: { _controller: EspritMoocBundle:Cours:modifierQuizzCours}       
+    
+modifier_question_chapitre:
+    path: /modifier_question_chapitre/{idQuestion}
+    defaults: { _controller: EspritMoocBundle:Quizz:modifierQuestionChapitre}       
+    
+modifier_question_cours:
+    path: /modifier_question_cours/{idQuestion}
+    defaults: { _controller: EspritMoocBundle:Quizz:modifierQuestionCours}       
+  
+modifier_reponse_cours:
+    path: /modifier_reponse_cours/{idReponse}
+    defaults: { _controller: EspritMoocBundle:Quizz:modifierReponseCours}             
+    
+modifier_reponse_chapitre:
+    path: /modifier_reponse_chapitre/{idReponse}
+    defaults: { _controller: EspritMoocBundle:Quizz:modifierReponseChapitre} 
+    
+supprimer_question_cours:
+    path: /supprimer_question_cours/{idQuestion}
+    defaults: { _controller: EspritMoocBundle:Quizz:supprimerQuestionCours}      
+    
+supprimer_question_chapitre:
+    path: /supprimer_question_chapitre/{idQuestion}
+    defaults: { _controller: EspritMoocBundle:Quizz:supprimerQuestionChapitre}          
+
+supprimer_reponse_cours:
+    path: /supprimer_reponse_cours/{idReponse}
+    defaults: { _controller: EspritMoocBundle:Quizz:supprimerReponseCours}               
+    
+supprimer_reponse_chapitre:
+    path: /supprimer_reponse_chapitre/{idReponse}
+    defaults: { _controller: EspritMoocBundle:Quizz:supprimerReponseChapitre}           
+    
+modifier_donnee_quizz_cours:
+    path: /modifier_donee_quizz_cours/{idQuizzCours}
+    defaults: { _controller: EspritMoocBundle:Quizz:modifierDonneeQuizzCours}           
+    
+modifier_donnee_quizz_chapitre:
+    path: /modifier_donnee_quizz_chapitre/{idQuizzChapitre}
+    defaults: { _controller: EspritMoocBundle:Quizz:modifierDonneeQuizzChapitre}         
+    
+ajouter_question_chapitre:
+    path: /ajouter_question_chapitre/{idQuizzChapitre}
+    defaults: { _controller: EspritMoocBundle:Quizz:ajouterQuestionChapitre}      
+    
+ajouter_question_cours:
+    path: /ajouter_question_cours/{idQuizzCours}
+    defaults: { _controller: EspritMoocBundle:Quizz:ajouterQuestionCours}         
+    
+modifier_forum:
+    path: /modifier_forum/{idForum}
+    defaults: { _controller: EspritMoocBundle:Forum:modifierForum}       
+    
+ajouter_reponse:
+    path: /ajouter_reponse/{idQuestion}
+    defaults: { _controller: EspritMoocBundle:Quizz:ajouterReponse}       
+    
+supprimer_forum:
+    path: /supprimer_forum/{idForum}
+    defaults: { _controller: EspritMoocBundle:Forum:supprimerForum}           
+    
+supprimer_quizz_cours:
+    path: /supprimer_quizz_cours/{idQuizzCours}
+    defaults: { _controller: EspritMoocBundle:Quizz:supprimerQuizzCours}           
+    
+supprimer_quizz_chapitre:
+    path: /supprimer_quizz_chapitre/{idQuizzChapitre}
+    defaults: { _controller: EspritMoocBundle:Quizz:supprimerQuizzChapitre}            
+
+mes_parcours:
+    path: /mes_parcours
+    defaults: { _controller: EspritMoocBundle:Mooc:mesParcours}     
+  
+publier_ma_application:
+    path: /ma_application
+    defaults: { _controller: EspritMoocBundle:Apprenant:publierMaApplication }

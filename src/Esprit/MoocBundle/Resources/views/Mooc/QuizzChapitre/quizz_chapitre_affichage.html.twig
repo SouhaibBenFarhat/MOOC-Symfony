@@ -1,0 +1,52 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block titre %}{{quizz.titreQuizzEntrainement}}{% endblock %}
+{% block content %}
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+                <fieldset class="scheduler-border">
+                    <div class="col-md-9 col-md-offset-1">
+                        <h2>     
+                            <div  class="  col-md-4 col-md-offset-12">
+                                <br>
+                            </div>
+                        </h2>
+                        <br><br><br>
+                        <form action="{{ path('calculer_score_quizz_chapitre') }}" method="post" class="form" accept-charset="ISO-8859-1" name="myForm" id="myForm"><legend><b> Titre Quizz:</b>  {{ quizz.titreQuizzEntrainement }}</legend>
+                                    {%set  i=0 %}
+                                    {% set j=0 %}
+                                    {%  for q in question %} <br><br>
+                                {% set j=0 %}
+                                {% set  i=i+1%} <legend><b> Question {{ i }}: </b>    </legend> <u>{{ q.texteQuestion }} </u><br><br><br>
+                                    {% for r in reponse %}
+                                        {% if q.idQuestion == r.idQuestionReponse.idQuestion %}
+                                            {% set  j=j+1 %}
+                                            {% if r.etatReponse=='vrai'%}                          
+                                            <input type="checkbox" id="remember_me" name="checkbox{{ i }}{{ j }}" value="{{ r.etatReponse }}" class="" />
+                                            <input type="text" name="reponse{{i}}{{j}}" value="{{ r.texteReponse }}" hidden>{{ r.texteReponse }} <br>
+                                        {% else %}
+                                            <input type="checkbox" id="remember_me" name="checkbox{{ i }}{{ j }}" value="{{ r.etatReponse }}" class="" /> 
+                                            <input type="text" name="reponse{{i}}{{j}}" value="{{ r.texteReponse }}" hidden>{{ r.texteReponse }} <br>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                            <br>
+                            <input type="text"   name="nombreQuestion" value="{{ i }}" class=" "hidden ><br>
+                            <input type="text"  name="nombreReponse" value="{{ j }}"  class=" "hidden><br>
+                            <br>
+                            <br>
+                            <div class="alert alert-warning">
+                                <legend><b>Si vous cliquez Suivant, Vous n'avez plus le droit de refaire ce Quizz,<br> Merci de bien vérifier vos reponse avant de les validés</b></legend>
+                            </div>
+                            <br>
+                            <div>
+                                <input type="submit" value="Suivant" class='btn-primary' />
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+            </div>            
+        </div>
+    </section>
+{% endblock content %}

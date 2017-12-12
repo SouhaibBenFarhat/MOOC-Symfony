@@ -1,0 +1,92 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block content %} 
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+
+    <br>
+
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+
+
+
+
+
+
+                <div class="col-md-5 col-md-offset-1" align="left" >
+                    <form action="{{ path('ajouter_chapitre',{idCours:cours.idCours}) }}" method="POST"  class="form" role="form" enctype="multipart/form-data">   <legend>Ajout Chapitre</legend>
+
+
+                        <input type="text" class="form-control" name="titre" placeholder="titre"  required> <br>
+                        <select class="form-control" name="cours" required readonly>
+                                <option value="{{cours.idCours}}">{{cours.titreCours }}</option>
+                        </select> <br>
+                        <select class="form-control " name="niveau" required>
+                            <option value="">--Select One--</option>
+                            <option value="Facile">Facile</option>
+                            <option value="Normale">Normale</option>
+                            <option value="Difficile">Difficile</option>
+                            <option value="Extreme">Extreme</option>
+                        </select> <br>
+                        <input type="number" class="form-control" name="duree" placeholder="durée du chapitre en Heurs" required><br>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="video" accept="video/*"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="Video" required>
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="file" accept="application/pdf"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="PDF file " required>
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="presentation" accept="application/pdf"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="PDF file Presentation " required>
+                        </div><br>
+                        </div>
+
+                        <div class="col-md-7 col-md-offset-1">
+                            <textarea  class="form-control" name="introduction" placeholder="Introduction..." required rows="4"></textarea><br>
+                            <label class="">Description</label> <br>
+                            <div class="span7">
+                                <textarea  class="ckeditor" name="description" placeholder="description" required rows="10"></textarea><br>
+                            </div>
+                            <label class="">Objectif</label> <br>
+                            <div class="span7">
+                                <textarea class="ckeditor" name="objectif" placeholder="objectif" required rows="10"></textarea><br>
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <label class="">Rediger Votre Chapitre</label> <br>
+                            <div class="span7">
+                                <textarea class="ckeditor" name="contenu" placeholder="prerequis cour" required rows="20"></textarea><br>
+                            </div>
+                            <br>
+                            {% for flashMessage in app.session.flashbag.get('notice') %}
+                                <div class="alert alert-success">
+                                    {{ flashMessage }}
+                                </div>
+
+                            {% endfor %}
+                            <br />
+                            <input type="submit" name="" value="Finish" class="btn btn-primary">
+                        </div>
+                    </form>  
+
+
+                </div>
+            </div>            
+        </div>
+    </div>
+</section>
+{% endblock %}

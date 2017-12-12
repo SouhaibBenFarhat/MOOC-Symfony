@@ -1,0 +1,127 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block content %}    
+    
+    <br><br>
+    <section id="portfolio">
+    <div class="container">
+    <div class="container conteneur-page-invitation">
+        <script>
+            function accepter(id){    
+    swal({   title: "Etes Vous sur?",   
+            text: "vous allez Accepter cette entreprise!",   
+            
+        type: "warning",   
+        showCancelButton: true,  
+        confirmButtonColor: "#DD6B55",   
+        confirmButtonText: "OUI!",   
+        cancelButtonText: "NON!",  
+        closeOnConfirm: false,   
+        closeOnCancel: false }, 
+    function(isConfirm){   
+        if (isConfirm) {    
+            swal("Accepter", "Cette entreprise est acceptée", "success");
+            
+            	 $.ajax({ 
+                     type : "GET",
+                     url: "{{ path('formateur_accepter_entreprise')}}",
+                     data : {idEntreprise:id},
+                     success : function(response){
+                       swal({
+                           title:"Acceptation!",
+                           text: "Entreprise acceptée avec succées",
+                           type:"success"
+                       });
+                       location.reload();
+							}
+						 });
+        } else {     
+            swal("En attente", "L'entreprise est en attente", "error");  
+        } });
+        
+}
+</script>
+<script>
+  function refuser(id){
+                
+        swal({   title: "Etes Vous sur?",   
+            text: "vous allez rejeter cette entreprise!",   
+            
+        type: "warning",   
+        showCancelButton: true,  
+        confirmButtonColor: "#DD6B55",   
+        confirmButtonText: "OUI!",   
+        cancelButtonText: "NON!",  
+        closeOnConfirm: false,   
+        closeOnCancel: false }, 
+    function(isConfirm){   
+        if (isConfirm) {    
+            swal("Rejeter", "Cette entreprise est rejetée", "success");
+            
+            	 $.ajax({ 
+                     type : "GET",
+                     url: "{{ path('formateur_refuser_entreprise')}}",
+                     data : {idEntreprise:id},
+                     success : function(response){
+                       swal({
+                           title:"Annulation!",
+                           text: "Entreprise rejetée avec succées",
+                           type:"success"
+                       });
+                       location.reload();
+							}
+						 });
+        } else {     
+            swal("En attente", "L'entreprise est en attente", "error");  
+        } });
+}
+        </script>
+	<br>
+<div class="col-md-12"> 
+    
+      
+         {# {%if( invitations is empty)%}
+              <b>hello </b>#}
+           
+           {%for e in invitations %}
+              {%for i  in information %} 
+                  {%if(e.idEntreprise.id==i.entreprise.id) and e.idEntreprise.enabled=='1'%}
+                      <div class="col-sm-6 col-md-4">
+                                  <div class="thumbnail">
+                           
+                           <img src="{{asset ('uploads/photos/man4.jpg')}}" alt="website template image" class="img-responsive"/>
+                               
+                             
+                                   
+                                    <h2><p><i class="fa fa-user"></i> <small><a href="{{ path('fos_user_profile_show_with_id',{id:e.idEntreprise.id})}}">{{e.idEntreprise.username}}</a></small></p></h2>
+                                    <b>Specialite : </b>{{i.specialite}}<br/>
+                                    <b>Description : </b>{{i.description}}
+                                    {% if(app.user.idEntrepriseUtlisateur is null)%} 
+                                        <center><p><h3> <a onClick="accepter({{e.idEntreprise.id}})"><i class="glyphicon glyphicon-ok-circle"></i></a>
+                                                <a onClick="refuser({{e.idEntreprise.id}})"><i class="glyphicon glyphicon-trash"></i></a></h3></center>
+                                    
+                                    {%endif %}
+       
+
+                          
+                                    
+                                  </div>
+                             </div>
+                                    {%endif%}
+			 {% endfor %}
+                        {% endfor %}
+            
+    </div>
+
+	
+    <!-- Footer -->
+		    <!-- Fin Footer -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+
+         </div> <!-- /.modal -->
+		    
+		</div><!-- /.container -->
+      
+        
+        </section>	
+{% endblock %}

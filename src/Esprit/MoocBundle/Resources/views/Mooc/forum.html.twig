@@ -1,0 +1,124 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block titre %} forum  {% endblock %}
+{% block content %}
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+    <div class="container col-md-offset-1" style="margin-top: 35px">
+        <div class="page-header page-heading">
+            <h1 class="pull-left">Forums</h1>
+            <ol class="breadcrumb pull-right where-am-i">
+                <li><a href="{{ path('nos_forum') }}">Forums</a></li>
+                <li class=""><a href="{{ path('mes_sujets') }}">Mes sujet</a></li>
+                <li class="active"><a href="{{ path('mes_sujets') }}">Mes interventions</a></li>
+            </ol>
+            <div class="clearfix"><legend> <b>  {{ forum.nomForum }}</b></legend>  <a href="#publier" class=" pull-right btn-primary">Publier sujet </a></div>
+
+        </div>
+
+        <p class="lead">This is the right place to discuss any ideas, critics, feature requests and all the ideas regarding our website. Please follow the forum rules and always check FAQ before posting to prevent duplicate posts.</p>
+        <table class="table forum table-striped">
+            <thead>
+                <tr>
+                    <th class="cell-stat"></th>
+                    <th class="cell-stat text-center hidden-xs hidden-sm">
+                        Sujet
+                    </th>
+
+                    <th class="cell-stat text-center hidden-xs hidden-sm">Posts</th>
+                    <th class="cell-stat-2x hidden-xs hidden-sm">Last Post</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sujet in sujets %}
+                    <tr>
+                        <td class="text-center"><i class="fa fa-question fa-2x text-primary"></i></td>
+                        <td>
+                            <h4><a href="{{ path('afficher_sujet',{idSujet:sujet.id}) }}">{{ sujet.titreSujet }}</a><br><small>{{ sujet.sousTitreSujet | raw }}</small></h4>
+                        </td>
+
+                        <td class="text-center hidden-xs hidden-sm"><a href="#">{{ sujet.nombreMessage }}</a></td>
+                        <td class="hidden-xs hidden-sm">by <a href="#">{{ sujet.idApprenant.username }}</a><br><small><i class="fa fa-clock-o"></i> {{ sujet.datePublicationSujet|date("m/d/Y") }}</small></td>
+                    </tr>
+                {% endfor  %}
+                {#                <tr>
+                                    <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
+                                    <td>
+                                        <h4><a href="#">Important changes</a><br><small>Category description</small></h4>
+                                    </td>
+                                    <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
+                                    <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
+                                    <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
+                                </tr>#}
+            </tbody>
+        </table>
+        {#  <table class="table forum table-striped">
+              <thead>
+                  <tr>
+                      <th class="cell-stat"></th>
+                      <th>
+              <h3>Suggestions</h3>
+              </th>
+              <th class="cell-stat text-center hidden-xs hidden-sm">Topics</th>
+              <th class="cell-stat text-center hidden-xs hidden-sm">Posts</th>
+              <th class="cell-stat-2x hidden-xs hidden-sm">Last Post</th>
+              </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td class="text-center"><i class="fa fa-heart fa-2x text-primary"></i></td>
+                      <td>
+                          <h4><a href="#">More more more</a><br><small>Category description</small></h4>
+                      </td>
+                      <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
+                      <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
+                      <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 3 months ago</small></td>
+                  </tr>
+                  <tr>
+                      <td class="text-center"><i class="fa fa-magic fa-2x text-primary"></i></td>
+                      <td>
+                          <h4><a href="#">Haha</a><br><small>Category description</small></h4>
+                      </td>
+                      <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
+                      <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
+                      <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
+                  </tr>
+              </tbody>
+          </table>#}
+        {#  <table class="table forum table-striped">
+              <thead>
+                  <tr>
+                      <th class="cell-stat"></th>
+                      <th>
+              <h3>Open discussion</h3>
+              </th>
+              <th class="cell-stat text-center hidden-xs hidden-sm">Topics</th>
+              <th class="cell-stat text-center hidden-xs hidden-sm">Posts</th>
+              <th class="cell-stat-2x hidden-xs hidden-sm">Last Post</th>
+              </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td></td>
+                      <td colspan="4" class="center">No topics have been added yet.</td>
+                  </tr>
+              </tbody>
+          </table>#}
+    </div>
+
+    <div id="publier" class="row">
+        <div id="">
+            <br><br><br><br><br>
+            <div class="col-md-7 col-md-offset-1" id="">
+                <form class="form" method="post"  role="form" action="{{ path('publier_sujet',{idForum:forum.id }) }}">
+                    <legend><b>Créer votre sujet</b></legend><br>
+                    <div class="col-md-6 ">
+                        <input type="text" class="form-control" placeholder="Titre de sujet..."  name="titreSujet" required><br>
+
+                        <input type="text" class="form-control" placeholder="Sous-titre..."  name="sousTitreSujet"><br>
+                    </div><br><br><br><br><br><br>
+                    <textarea class="ckeditor" rows="10" name="descriptionSujet" required></textarea><br>
+                    <input type="submit" class="btn-primary pull-right" value="Envoyer" >
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

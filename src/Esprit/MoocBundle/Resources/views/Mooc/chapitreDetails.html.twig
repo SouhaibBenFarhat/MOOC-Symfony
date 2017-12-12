@@ -1,0 +1,225 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+
+{% block content %} 
+    <style>
+        .not-active {
+            pointer-events: none;
+            cursor: default;
+
+        }
+    </style>
+    <br/><br/><br><br>
+    <nav class="navbar navbar-inverse" role="banner" style="    background-color: rgba(236,236,236,1); box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.61);">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h2 style="color: #333;">  <a class="navbar-brand" href="{{path('esprit_mooc_cours')}}"></a>{{ chapitre.titreChapitre }}</h2>
+            </div>
+
+        </div><!--/.container-->
+    </nav>
+    <section id="blog" class="container">
+        {#        <div class="center">
+                    <div class="get-started center wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+                      
+                        <p class="lead" style="padding: 20px;"><br>{{ chapitre.introductionChapitre }} </p>
+                        <div class="request">
+                            <h4><a href="#">&nbsp&nbsp&nbsp&nbsp&nbsp Elephent Word &nbsp&nbsp&nbsp&nbsp&nbsp</a></h4>
+                        </div>
+                    </div>
+                    <h2> </h2>
+                    <p class="lead"></p>
+                </div>#}
+
+
+
+        <ul class="portfolio-filter text-center">
+            {% set class='' %}
+            {% for chap in chapitres %}
+                {% if chap.titreChapitre==chapitre.titreChapitre %}
+                    {% set class='active' %}
+                {% endif %}
+                <li><a class="btn btn-default {{class}}" href="{{ path('afficher_chapitre',{idChapitre:chap.idChapitre,idCours:chap.idCoursChapitre.idCours}) }}" data-filter="*">{{ chap.titreChapitre }}</a></li>
+                    {% set class='' %}
+                {% endfor %}
+        </ul>
+
+
+
+        <div class="blog">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="blog-item">
+
+                        <div class="embed-responsive"  style="background-color: black;"    >
+                            <video width="100%" height="350" controls   class="embed-responsive-item">
+                                <source src="{{asset('uploads/video/chapitre/' ~ chapitre.cheminVideoChapitre )}}" type="video/mp4">
+                            </video>
+                        </div>
+                        <br>
+                        <div class="row">  
+                            <div class="col-xs-12 col-sm-2 text-center">
+                                <div class="entry-meta">
+                                    <span id="publish_date"><i class="fa fa-calendar"> {{chapitre.dateAjout|date('d') }}{{chapitre.dateAjout|date('F') }}</i></span>
+                                    <span id=""><center><i class="fa fa-clock-o"></i> <a href="#"> {{chapitre.dureeChapitre}} heurs</a></center></span>
+                                    <span><center><i class="fa  fa-signal"></i> <a href="">{#{{ chapitre.niveauChapitre }}#} Hard </a></center></span>
+                                    <span><center><i class="fa fa-heart"></i><a href="#"> 56 Likes</a></center></span>
+                                    <span><center><i class="fa fa-trophy"></i><a href="#"> Quizz</a></center></span>
+                                    <span style=" background-color: #333;"><center><i class="fa fa-file-text"></i><a href="{{asset ('uploads/chapitre/pdfFile/' ~ chapitre.cheminChapitre )}}" class="not-active" > Telecharger</a></center></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-10 blog-content media reply_section"><br>
+                                <h2>{{ chapitre.titreChapitre }}</h2>
+                                {{ chapitre.descriptionChapitre | raw }}
+                                <div class="post-tags">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div><!--/.blog-item-->
+
+                    <div class="media reply_section">
+                        <div class="pull-left post_reply text-center">
+                            <a href="#"><img src="{{asset ('bundles/espritmooc/images/blog/boy.png')}}" class="img-circle" alt="" /></a>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i> </a></li>
+                            </ul>
+                            <br><br>
+                        </div>
+
+
+
+                        <h3><strong>Ce Chapitre à etait publier de la part du Professeur  <a href="{{ path('fos_user_profile_show_with_id',{id:chapitre.idCoursChapitre.idFormateurCours.id}) }}">{{chapitre.idCoursChapitre.idFormateurCours.username}}</a></strong></h3>
+                        <p class="lead"></p>
+                        <p><strong>Web:</strong> <a href="http://www.shapebootstrap.net">{{chapitre.idCoursChapitre.idFormateurCours.informationFormateur.siteWeb}}</a></p>
+                    </div>
+
+
+
+                    <div class="media reply_section">
+                        <div class="media-body post_reply_content">
+                            <h3><b>Objectif </b></h3></b>
+                            {{  chapitre.objectifChapitre | raw}}
+                        </div>
+                    </div> 
+                    <br>
+
+                    <div class="alert alert-success">
+
+                        <div class="media-body post_reply_content">
+                            <h3><b>Prerequis </b></h3>
+                            {#{{  cours.prerequisCours | raw }}#} <h3> {{  chapitre.objectifChapitre | raw}} </h3><br><br>
+                        </div> 
+                    </div>
+                    <div class="col-md-10">
+                        {{ chapitre.contenuChapitre | raw}}
+                    </div>
+                    <div class="media col-md-10">
+                        <h1 id="comments_title"></h1>
+                        {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id':chapitre.idChapitre} %}
+                    </div><!--/.col-md-8-->
+                </div>
+                <aside class="col-md-4" style="background-color: #F3F3F3; padding: 15px; border-radius: 15px;">
+                    <div style="margin-top: -210px">
+                    </div>
+                    <div class="widget search">
+                        <form role="form" action="{{ path('chercher_cours') }}" method="POST">
+                            <input type="text" class="form-control search_box" autocomplete="off" placeholder="Search Here" name="titre">
+                        </form>
+                    </div><!--/.search-->
+
+                    <div class="widget categories">
+                        <h3>Recent Chapters</h3>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% for chap in chapitres %}
+                                    <div class="single_comments">
+                                        <img src="{{asset ('uploads/discipline/logo/' ~ chap.idCoursChapitre.idDisciplineCours.logo )}}" alt=""  height="42" width="42">
+                                        <p>{{ chap.titreChapitre }} </p>
+                                        <div class="entry-meta small muted">
+                                            <span>By <a href="{{ path('fos_user_profile_show_with_id',{id:chap.idCoursChapitre.idFormateurCours.id }) }}">{{ chap.idCoursChapitre.idFormateurCours.username }}</a></span>On <a href="{{ path('esprit_mooc_details_cours',{id:chap.idCoursChapitre.idCours})}}">{{ chap.idCoursChapitre.titreCours }}</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+
+                            </div>
+                        </div>                     
+                    </div><!--/.recent comments-->
+
+
+                    <div class="widget categories">
+                        <h3>Categories</h3>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="blog_category">
+                                    <li><a href="#">Computers <span class="badge">04</span></a></li>
+                                    <li><a href="#">Smartphone <span class="badge">10</span></a></li>
+                                    <li><a href="#">Gedgets <span class="badge">06</span></a></li>
+                                    <li><a href="#">Technology <span class="badge">25</span></a></li>
+                                </ul>
+                            </div>
+                        </div>                     
+                    </div><!--/.categories-->
+
+                    <div class="widget archieve">
+                        <h3>Archieve</h3>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="blog_archieve">
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> December 2013 <span class="pull-right">(97)</span></a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> November 2013 <span class="pull-right">(32)</span></a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> October 2013 <span class="pull-right">(19)</span></a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> September 2013 <span class="pull-right">(08)</span></a></li>
+                                </ul>
+                            </div>
+                        </div>                     
+                    </div><!--/.archieve-->
+
+                    <div class="widget tags">
+                        <h3>Tag Cloud</h3>
+                        <ul class="tag-cloud">
+                            <li><a class="btn btn-xs btn-primary" href="#">Apple</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Barcelona</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Office</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Ipod</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Stock</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Race</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">London</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Football</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Porche</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Gadgets</a></li>
+                        </ul>
+                    </div><!--/.tags-->
+
+                    <div class="widget blog_gallery">
+                        <h3>Our Gallery</h3>
+                        <ul class="sidebar-gallery">
+                            <li><a href="#"><img src="images/blog/gallery1.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery2.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery3.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery4.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery5.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery6.png" alt=""></a></li>
+                        </ul>
+                    </div><!--/.blog_gallery-->
+
+
+                </aside>
+
+            </div><!--/.row-->
+
+        </div><!--/.blog-->
+
+    </section><!--/#blog-->
+
+{% endblock %}

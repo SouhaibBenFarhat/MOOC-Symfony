@@ -1,0 +1,167 @@
+{% block content %}
+    {#  <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+      <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>#}
+
+    {% if app.request.get('notice') =='supp' %}
+        <script>
+            $(document).ready(function () {
+                $.notify("Suppression réussit", "success");
+            });
+        </script>
+    {% endif %}
+    {% if app.request.get('notice') =='success' %}
+        <script>
+            $(document).ready(function () {
+                $.notify("Modification effectué", "success");
+            });
+        </script>
+    {% endif %}
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="home">
+            <div id="users-management" class="col-md-8">
+                <div class="panel-group" id="accordion">
+                    {% set i=1 %}
+                    {% for discipline in disciplines %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="background-color: #FFFFFF">
+                                <h4 class="panel-title">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapse-{{i}}"><img src="{{asset ('uploads/discipline/logo/' ~ discipline.logo )}}" class="img-circle" width="100px" height="100px">
+                                        {{ discipline.nomDiscipline | raw}} <small></small>
+                                    </a>
+                                    <div class="btn-group pull-right"><a href="#" class="btn btn-warning" data-toggle="modal" data-target="#myModalUpdate{{i}}" style="background-color: #0097A7; border-color: white;" ><i class="fa fa-pencil"></i><span> Edit</span></a><a href="#"  data-toggle="modal" data-target="#myModalSupp{{i}}" class="btn btn-danger" style="background-color: #007986; border-color: white;"><i class="fa fa-times"></i><span> Remove</span></a></div>
+                                </h4>
+                            </div>
+                            <div id="collapse-{{i}}" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                </div>
+                                <div style="background-color: white;"><br><br>
+                                    {{ discipline.description |raw }}<br><br>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="btn-group btn-group-xs"><span class="btn"> </span><a class="btn btn-success" href="#"><i class="fa fa-book"> &nbsp;{{ discipline.nombreCours }}</i> </a>&nbsp;&nbsp; <span class="btn"> </span><a class="btn btn-success" href="#"><i class="fa fa-calendar"></i> {{ discipline.dateCreation|date("m/d/Y") }}</a>
+                                        <span class="btn"> </span>       <a class="btn btn-success" href="#"  data-toggle="modal" data-target="#myModalForum{{i}}"><i class="fa fa-book"> </i>&nbsp;Forum: {% if discipline.idForum !=null %}{{ discipline.idForum.nomForum }}{% else %} {% endif %}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myModalForum{{i}}" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Modifier</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        {% if discipline.idForum!=null %}
+                                            <form class="form" method="post" action="{{ path('modifier_forum',{idForum:discipline.idForum.id}) }}" enctype="multipart/form-data">
+                                                <label class="pull-left"> Nom forum</label>
+                                                <input type="text" class="form-control" value="{{discipline.idForum.nomForum}}" required name="nomForum"><br>  
+                                                <label class="pull-left">Discipline</label>
+                                                <input type="text" class="form-control" value="{{discipline.nomDiscipline}}" required name="" readonly=""><br>  
+                                                <small>  <a data-toggle="collapse" data-parent="#accordion"
+                                                            href="#collapseDiscipline{{i}}">cliquer içi</a> si vous voulez changer la discipline</small><br>
+                                                <div id="collapseDiscipline{{i}}" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <select class="form-control" name="disciplineForum">
+                                                            {% for disc in disciplines %}
+                                                                <option value="{{disc.idDiscipline}}"
+                                                                        {% if disc.idDiscipline==discipline.idForum.idDiscipline.idDiscipline%} selected=""{% endif %}
+                                                                        >{{ disc.nomDiscipline }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div><br>
+                                                <label class="pull-left">Date de creation</label>
+                                                <input type="text" value="{{discipline.idForum.dateCreation| date ("m/d/Y") }}" class="form-control" disabled=""><br>
+                                                <label class="pull-left">nombre de sujet: {{discipline.idForum.nombreSujet}}</label><br><br>
+                                                <label class="pull-left">nombre de vus: {{discipline.idForum.nombreVue}}</label><br><br>
+                                                <input type="submit" class=" pull-left btn-primary" value="Modifier"><a href="#collapseSuppForum{{i}}" data-toggle="collapse" data-parent="#accordion" class=" pull-left btn-primary"  style="margin-left: 30px;">Supprimer</a><br><br>
+                                                <div id="collapseSuppForum{{i}}" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        Ête vous sûr? <a href="{{ path('supprimer_forum',{idForum:discipline.idForum.id}) }}" >oui</a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        {% else %}
+                                            <b> aucun forum disponible </b>
+                                        {% endif %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myModalUpdate{{i}}" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Modifier</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form" method="post" action="{{ path('modifier_discipline',{idDiscipline:discipline.idDiscipline}) }}" enctype="multipart/form-data">
+                                            <label class="pull-left"> Titre discipline</label>
+                                            <input type="text" class="form-control" value="{{discipline.nomDiscipline}}" required name="nomDiscipline"><br>  
+                                            <textarea class="ckeditor" rows="10" name="Description" value="" required>{{ discipline.Description }}</textarea><br>
+                                            <a data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapse{{i}}">cliquer içi</a> si vous voulez modifier le logo<br><br>
+                                            <div id="collapse{{i}}" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <img src="{{asset ('uploads/discipline/logo/' ~ discipline.logo )}}" class="img-circle" width="100px" height="100px"><br><br>
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <span class=" btn-primary btn-file btn">
+                                                                Browse&hellip; <input type="file"  name="logo" accept="image/png"  >
+                                                            </span>
+                                                        </span>
+                                                        <input type="text" class="form-control" readonly placeholder="logo...  100x100" >
+                                                    </div><br><br>
+                                                </div>
+                                            </div>
+
+                                            <input type="submit" class=" pull-left btn-primary" value="Modifier">
+                                        </form><br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myModalSupp{{i}}" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Supprimer</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label>Etes vous sûr de supprimer?</label>
+                                        <div class="alert alert-danger">
+                                            Si vous supprimer cette discipline, toutes les informations liées à cette discipline serons supprimer aussi...
+                                        </div>
+                                        <a href="{{ path('supprimer_discipline',{idDiscipline:discipline.idDiscipline}) }}" class=" pull-left btn-primary">Supprimer</a><br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% set i=i+1 %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    </div>
+    </div>
+</div>#}
+{% endblock %}

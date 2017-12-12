@@ -1,0 +1,36 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block titre %}Quizz Chapitre {% endblock %}
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+                <fieldset class="scheduler-border">
+                    <div class="col-md-8 col-md-offset-1">
+                        <form action="{{ path("quizz_chapitre",{idCours:cours.idCours}) }}" method="post" class="form"><legend><b> Ajouter Quizz Chapitre</b></legend>.
+                            <input type="text" class="form-control input-lg" placeholder="Titre Quizz" name="titreQuizz" required><br>
+                            <textarea class="form-control input-lg" placeholder="Description" rows="6" name="descriptionQuizz" required></textarea><br>
+                            <select class="form-control input-lg" required name="niveauQuizz">
+                                <option value="">-- Select one --</option>
+                                <option value="Facile">Facile</option>
+                                <option value="Moyenne">Moyenne</option>
+                                <option value="Difficile">Difficile</option>
+                                <option value="Extreme">Extreme</option>
+                            </select><br>
+                            <select class="form-control input-lg" readonly name="idCours">
+                                <option value="{{ cours.idCours }}">Cours: {{ cours.titreCours }}</option>
+                            </select><br>
+                            <div>
+                                <input type="submit" value="Suivant" class='btn-primary' />
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+            </div>            
+        </div>
+    </section>
+{% endblock content %}

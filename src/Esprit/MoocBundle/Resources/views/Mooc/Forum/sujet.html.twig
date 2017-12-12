@@ -1,0 +1,285 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+
+{%  block titre %} Sujet {% endblock %}
+{% block content %}
+    <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+    {% if sujet.nombreJaime is not null %}   {% set i=sujet.nombreJaime+1 %} {% else %}  {% set i=1 %}{% endif %}
+    <script>
+        function notification()
+        {
+
+            $("#like").attr("style", "color:#4A4646;");
+            $("#like").attr("onclick", "");
+            $("#nombreJaime").html("{{i}}");
+
+        {#  $("#numbernotif").html("&nbsp&nbsp&nbsp");#}
+                jQuery.ajax({
+                    type: 'GET',
+                    url: '{{ path('like_sujet',{idSujet:sujet.id}) }}',
+                    success: function (data) {
+                    }});
+            }
+            function notification2()
+            {
+
+                $("#alert").attr("class", "alert alert-success");
+
+
+            }
+    </script>
+    {% if app.request.get('notice') =='success' %}
+        <script>
+            $(document).ready(function () {
+                $.notify("Envoyé", "success");
+            });
+        </script>
+    {% endif %}
+    {% if app.request.get('notice') =='echec' %}
+        <script>
+            $(document).ready(function () {
+                $.notify("echec", "error");
+            });
+        </script>
+    {% endif %}
+    <br><br>
+    <div class="container">
+        <div class="page-header page-heading">
+            <h1 class="pull-left">Forums</h1>
+            <ol class="breadcrumb pull-right where-am-i">
+                <li><a href="{{ path('forum',{idDiscipline:sujet.idForum.idDiscipline.idDiscipline}) }}">Go back to forum</a></li>
+                <li class="active"><a href="{{ path('mes_sujets') }}">Mes sujets</a></li>
+                <li class="active"><a href="{{ path('mes_interventions') }}">Mes interventions</a></li>
+                <li class="active"><a href="">Mes notifications</a></li>
+            </ol>
+            <div class="col-md-offset-9">
+                <ul>
+                </ul>
+                <ul class=" pagination">
+                    <form role="form" action="{{ path('chercher_forum') }}" method="POST">
+                        <input type="text" class="form-control " autocomplete="off" placeholder="Search Here" name="nomForum">
+                    </form> 
+                    {{ knp_pagination_render(messages) }}
+                </ul>  
+            </div>
+            <div class="clearfix"><legend><b>  {{ sujet.titreSujet }}</b></legend>  <a href="#publier" class=" pull-right btn-primary"style="background-color: #0097A7;">Publier</a></div>
+        </div>
+        <p class="lead"><a href=""><small>{{ sujet.titreSujet }}</a><br>Le {{ sujet.datePublicationSujet|date("F jS \\a\\t g:ia") }}<br>
+                {% if sujet.etatSujet=='1' %}
+                <i class="fa fa-pencil-square-o"  ></i>  Derniére modification {{ sujet.dateModificationSujet|date("F jS \\a\\t g:ia") }}
+            {% endif %}
+            </small></p>
+            {#<p class="alert alert-danger">This topic is <strong>2 years</strong> old. It can be missleading. Add warnings just like any other alerts with Bootstrap!</p>#}
+        <ul class="media-list forum">
+            <!-- Forum Post -->
+            <li class="media well">
+                <div class="pull-left user-info" href="#">
+                    {% if sujet.idApprenant.userPhoto is not null %}
+                        <a href="#"> <img class="avatar img-circle img-thumbnail" src="{{asset('uploads/userPhoto/' ~ sujet.idApprenant.userPhoto.path )}}"  width="64" alt="Generic placeholder image"></a>
+                    {% endif %}<br>
+                    <small class="btn-group btn-group-xs">
+                        <a class="btn btn-default"><i class="fa fa-thumbs-o-up"></i></a>
+                        <strong class="btn btn-success">{{ sujet.nombreJaime }}</strong>
+                    </small>
+                </div>
+                <div class="media-body">
+                    <!-- Post Info Buttons -->
+                    <div class="forum-post-panel btn-group btn-group-xs">
+                        <a href="#" class="btn btn-default"><i class="fa fa-clock-o"></i> {{ sujet.datePublicationSujet|date("F jS \\a\\t g:ia")  }}</a>
+                        <a href="#" class="btn btn-danger"><i class="fa fa-warning"></i> Report post</a>
+                    </div><br><br>
+                    <h4><a href="{{ path('afficher_sujet',{idSujet:sujet.id}) }}"> <i class="fa fa-question fa-2x text-primary"></i>    {{ sujet.titreSujet }}</a><small><br>
+                            {% if app.user %}
+                                <a href=""  ><i class="fa fa-envelope-o fa-2x"   data-toggle="modal" data-target="#myModalContact"></i></a>
+                                {% endif %}
+                            <strong><a href="user.html">{{sujet.idApprenant.username}}</a></strong>
+
+                        </small></h4>
+                    <!-- Post Info Buttons END -->
+                    <!-- Post Text -->
+                    {{ sujet.descriptionSujet | raw }}
+                    <!-- Post Text EMD -->
+                    {% if app.user %} 
+                        {% if  app.security.getToken().getUser().getUsername() == sujet.idApprenant%}
+                            <a href=""> <i class="fa fa-pencil-square-o fa-2x"  data-toggle="modal" data-target="#myModalUpdate"></i></a><br>
+                            <a href=""  >  <i class="fa fa-trash-o fa-2x" data-toggle="modal" data-target="#myModal"></i></a><br>
+                            {% endif %}
+                        {% endif %}
+                        {% if app.user %} 
+                            {% if aime == null %}
+                            <a id=""><i   onclick="notification()"  id="like" class="fa fa-thumbs-o-up fa-2x"></i></a>   <label id="nombreJaime">{{ sujet.nombreJaime }}</label>
+                            {% else %}  
+                            <i   onclick=""  id="like" class="fa fa-thumbs-o-up fa-2x"></i> <label id="nombreJaime">{% if sujet.nombreJaime is not null %}{{ sujet.nombreJaime }}{% else %} 0 {% endif  %}</label>
+                        {% endif %}         
+                    {% endif %}
+                </div>
+
+            </li>
+            <!-- Forum Post END -->
+            <!-- Forum Post -->
+            {% set i=1 %}
+            {% for message in messages %}
+                <li class="media well">
+                    <div class="pull-left user-info" href="#">
+                        {% if message.idutilisateurMessage.userPhoto is not null %}
+                            <img class="avatar img-circle img-thumbnail" src="{{asset('uploads/userPhoto/' ~ message.idUtilisateurMessage.userPhoto.path )}}" width="64" alt="Generic placeholder image">
+                        {% endif %}
+                        <br>
+                        <small class="btn-group btn-group-xs">
+                        </small>
+                    </div>
+                    <div class="media-body">
+                        <!-- Post Info Buttons -->
+                        <div class="forum-post-panel btn-group btn-group-xs">
+                            <a href="#" class="btn btn-default"><i class="fa fa-clock-o"></i> {{ message.datePublicationMessage|date("F jS \\a\\t g:ia")  }}</a>
+                            <a href="#" class="btn btn-danger"><i class="fa fa-warning"></i> Report post</a>
+                        </div>
+                        <h4><a href=""><i class="fa fa-magic fa-2x text-primary"></i>{{ message.titreMessage }}</a><small><br>
+                                By <strong><a href="user.html">{{message.idUtilisateurMessage.username}}</a></strong>
+                                <br></small></h4>
+                                {{ message.contenuMessage | raw }}
+                                {% if  app.security.getToken().getUser() == message.idUtilisateurMessage%}
+                            <a href=""> <i class="fa fa-pencil-square-o fa-2x"  data-toggle="modal" data-target="#myModalUpdateMessage{{i}}"></i></a><br>
+                            <a href="">  <i class="fa fa-trash-o fa-2x"  data-toggle="modal" data-target="#myModalSuppMessage{{i}}"></i></a>
+                        {% endif %}<br><br>
+                        {% if message.dateModificationMessage is not null %}
+                            <i class="fa fa-pencil-square-o"  ></i>  Derniére modification -  {{ message.dateModificationMessage|date("F jS \\a\\t g:ia") }}<br>
+                        {% endif %}
+                        <div class="modal fade" id="myModalSuppMessage{{i}}" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Supprimer</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ path('supprimer_message',{idMessage:message.id}) }}" class=" btn-primary">Delete</a>
+                                        <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myModalUpdateMessage{{i}}" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Modifier</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form" method="post" action="{{ path('modifier_message',{idMessage:message.id}) }}">
+                                            <label class="pull-left"> titre message</label>
+                                            <input type="text" class="form-control" value="{{message.titreMessage}}" required name="titreMessage"><br>  
+                                            <textarea class="ckeditor" rows="10" name="contenuMessage" value="" required>{{ message.contenuMessage }}</textarea><br>
+                                            <input type="submit" class=" pull-left btn-primary" value="Modifier">
+                                        </form><br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% set i=i+1 %}
+                    {% endfor %}
+                </div>
+            </li>
+            <!-- Forum Post END -->
+        </ul>
+    </div>
+    <div class="text-center" style="">
+        <ul class="pagination">
+            {{ knp_pagination_render(messages) }}
+        </ul>
+    </div>
+    {% if app.user %}
+        <div class="container "  style="margin-left: 30px;">
+            <div id="publier">
+                <div id="">
+                    <div class="col-md-7 col-md-offset-1" id="">
+                        <form class="form" method="post"  role="form" action="{{ path('ajouter_message',{idSujet:sujet.id}) }}">
+                            <legend><b>Publier</b></legend><br>
+                            <div class="col-md-6 ">
+                                <input type="text" class="form-control" placeholder="titre message..."  name="titreMessage" required><br>
+                            </div><br><br><br>
+                            <textarea class="ckeditor" rows="10" name="contenuMessage" required></textarea><br>
+                            <input type="submit" class="btn-primary pull-right" value="Envoyer" >
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Supprimer</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ path('supprimer_sujet',{idSujet:sujet.id}) }}" class=" btn-primary">Delete</a>
+                    <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalUpdate" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modifier</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form" method="post" action="{{ path('modifier_sujet',{idSujet:sujet.id}) }}">
+                        <label class="pull-left"> titre Sujet</label>
+                        <input type="text" class="form-control" value="{{sujet.titreSujet}}" required name="titreSujet"><br>
+                        <label class="pull-left"> sous-titre Sujet</label>
+                        <input type="text" class="form-control" value="{{sujet.titreSujet}}" required name="sousTitreSujet"><br>
+                        <textarea class="ckeditor" rows="10" name="contenuSujet" value="" >{{ sujet.descriptionSujet }}</textarea><br>
+                        <input type="submit" class=" pull-left btn-primary" value="Modifier">
+                    </form><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="myModalContact" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Contacter</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form" method="post" action="{{ path('envoyer_message',{idDestinataire:sujet.idApprenant.id,idSujet:sujet.id}) }}">
+                        <label class="pull-left">Envoyer à</label>
+                        <input type="text" class="form-control" value="{{ sujet.idApprenant.username }}" required name="titreSujet" disabled><br>
+                        <label class="pull-left">Titre Message</label>
+                        <input type="text" class="form-control" placeholder="write a title..." required name="titreMessage"><br>
+
+                        <textarea class="ckeditor" rows="10" name="contenuMessage" value="" >Write your message...</textarea><br>
+                        <input type="submit" class=" pull-left btn-primary" value="Envoyer">
+                    </form><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% if error is defined %}
+    <div class="alert alert-warning">
+        {{ error }}
+    </div>
+{% endif %}
+
+{{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'form' } }) }}<legend><b> Resetting Password Confirmation </b> </legend>
+
+{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control input-lg','placeholder':'New Password'}}) }}<br>
+{{ form_errors(form) }}<br>
+{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control input-lg','placeholder':'New Password Confirmation'}}) }}<br>
+<div>
+    <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" class="btn-primary" />
+</div>
+{{ form_end(form) }}

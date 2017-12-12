@@ -1,0 +1,118 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+
+{% block content %}
+
+
+    <script>
+
+        function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+                setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                        seconds = parseInt(timer % 60, 10);
+                        minutes = minutes < 10 ? "0" + minutes : minutes;
+                        seconds = seconds < 10 ? "0" + seconds : seconds;
+                        display.text(minutes + ":" + seconds);
+                        if (--timer < 0) {
+                timer = duration;
+                }
+                }, 1000);
+        }
+
+        jQuery(function ($) {
+        var fiveMinutes = 60 * 5,
+                display = $('#div_timerMinutes');
+                startTimer(fiveMinutes, display);
+        });</script>
+
+    <script type="text/javascript">
+                window.onload = function () {
+                var auto = setTimeout(function () {
+                autoRefresh();
+                }, 100);
+                        function submitform() {
+
+                        document.forms["myForm"].submit();
+                        }
+
+                function autoRefresh() {
+                clearTimeout(auto);
+                        auto = setTimeout(function () {
+                        submitform();
+                                autoRefresh();
+                        }, 1000 * 60 * 5);
+                }
+                }
+    </script>
+
+
+    <script language="javascript">
+        function document.onkeydown() {
+        if (event.keyCode == 116) {
+        alert("MOVING AWAY");
+                window.location.href = "/choice_page/";
+                event.keyCode = 0;
+                event.cancelBubble = true;
+                return false; }
+        }
+    </script>
+
+
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+
+                <fieldset class="scheduler-border">
+                    <div class="col-md-9 col-md-offset-1">
+
+                        <h2>     
+                            <div  class="  col-md-4 col-md-offset-12">
+                                <div class="alert alert-warning">
+                                    <label>Il vous reste </label>    <label id="div_timerMinutes"></label>
+                                </div>
+                                <br>
+                            </div>
+                        </h2>
+                        <br><br><br>
+                        <form action="{{ path('calculer_score_quizz_cours') }}" method="post" class="form" accept-charset="ISO-8859-1" name="myForm" id="myForm"><legend><b> Titre Quizz:</b>  {{ quizz.titreQuizzCours }}</legend>
+                                    {%set  i=0 %}
+                                    {% set j=0 %}
+                                    {%  for q in question %} <br><br>
+                                {% set j=0 %}
+                                {% set  i=i+1%} <legend><b> Question {{ i }}: </b>    </legend> <u>{{ q.texteQuestion }} </u><br><br><br>
+                                    {% for r in reponse %}
+                                        {% if q.idQuestion == r.idQuestionReponse.idQuestion %}
+                                            {% set  j=j+1 %}
+                                            {% if r.etatReponse=='vrai'%}
+                                                {#   <div class="alert alert-success">   #}                              
+                                            <input type="checkbox" id="remember_me" name="checkbox{{ i }}{{ j }}" value="{{ r.etatReponse }}" class="" />
+                                            <input type="text" name="reponse{{i}}{{j}}" value="{{ r.texteReponse }}" hidden>{{ r.texteReponse }} <br>
+                                            {#</div>#}
+                                        {% else %}
+                                            {#  <div class="alert alert-danger">#}
+                                            <input type="checkbox" id="remember_me" name="checkbox{{ i }}{{ j }}" value="{{ r.etatReponse }}" class="" /> 
+                                            <input type="text" name="reponse{{i}}{{j}}" value="{{ r.texteReponse }}" hidden>{{ r.texteReponse }} <br>
+                                            {#  </div>#}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                            <br>
+                            <input type="text"   name="nombreQuestion" value="{{ i }}" class=" "hidden ><br>
+                            <input type="text"  name="nombreReponse" value="{{ j }}"  class=" "hidden><br>
+                            <br>
+                            <br>
+                            <div class="alert alert-warning">
+                                <legend><b>Si vous cliquez Suivant, Vous n'avez plus le droit de refaire cette Quizz,<br> Merci de bien vérifier vos reponse avant de les validés</b></legend>
+                            </div>
+                            <br>
+                            <div>
+                                <input type="submit" value="Suivant" class='btn-primary' />
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+            </div>            
+        </div>
+    </section>
+{% endblock content %}

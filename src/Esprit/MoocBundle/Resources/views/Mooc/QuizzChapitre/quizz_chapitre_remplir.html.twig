@@ -1,0 +1,36 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block content %}
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+    <br>
+    <br>
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+
+                <fieldset class="scheduler-border">
+                    <div class="col-md-8 col-md-offset-1">
+                        <form action="{{ path('sauvegarder_quizz_chapitre') }}" method="post" class="form"><legend><b> Ajouter Quizz Chapitre</b></legend>.
+                                    {%  for i in 1..nombreQuestion %}
+                                <br><br>
+                                <legend><b>  Question {{ i }}:</b></legend><br>
+                                <input type="text" class="form-control input-lg" name="question{{i}}" required><br>
+                                {%  for j in 1..nombreReponse %}
+                                    Reponse {{ j }}:<br>
+                                    <input type="text" class="form-control"  name="reponse{{i}}{{j}}" value="" required>
+                                    <input type="checkbox" id="remember_me" name="etatreponse{{i}}{{j}}" value="Vrai" class="" /> <label for="remember_me" class="checkbox-inline"><b> </b></label><br><br>
+                                {% endfor %}
+                                <div class="alert alert-info"><center> ce texte n'apparait que lors de l'affichage de la correction</center></div>
+                                <textarea  name="explication{{i}}" class="ckeditor" placeholder="Expliquer Brievement votre question" required></textarea><br>
+                            {% endfor %}
+                            <input type="text" class=""  name="nombreQuestion" value="{{ nombreQuestion }}" hidden >
+                            <input type="text" class=""  name="nombreReponse" value="{{ nombreReponse }}" hidden >
+                            <div>
+                                <input type="submit" value="Suivant" class='btn-primary' />
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+            </div>            
+        </div>
+    </section>
+{% endblock content %}

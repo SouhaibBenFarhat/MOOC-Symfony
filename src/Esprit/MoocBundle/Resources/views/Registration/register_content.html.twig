@@ -1,0 +1,190 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+<script>
+
+    function avancement() {
+        var ava = document.getElementById("avancement");
+        var prc = document.getElementById("pourcentage");
+        prc.innerHTML = ava.value + "%";
+    }
+
+    avancement(); //Initialisation
+
+    function modif(val) {
+        var ava = document.getElementById("avancement");
+        if ((ava.value + val) <= ava.max && (ava.value + val) > 0) {
+            ava.value += val;
+        }
+        avancement();
+    }
+
+</script>
+
+{%  if  app.request.get('role') =='Apprenant' or  app.session.get('role')=='apprenant' %}
+    {% if error  %}
+        {% if form_errors(form.email) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.email) }}<br>
+            </div>
+        {% endif %}
+
+        {% if form_errors(form.username) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.username) }}<br>
+            </div>
+        {% endif %}
+
+        {% if form_errors(form.plainPassword.first) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.plainPassword.first) }}<br>
+            </div>
+        {% endif %}
+        {% if form_errors(form.plainPassword.second) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.plainPassword.second) }}<br>
+            </div>
+        {% endif %}
+
+
+    {% endif %}
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'form'}}) }}<legend>Inscription Apprenant</legend>
+    {{ form_widget(form.email, {'attr': {'class': 'form-control input-lg','placeholder':'email'}}) }}<br>
+    {{ form_widget(form.username, {'attr': {'class': 'form-control input-lg','placeholder':'username','pattern':'.{5,40}','required title':'5 to 10 characters'}}) }}<br>
+    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control input-lg','placeholder':'password'}}) }}<br>
+    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control input-lg','placeholder':'repeate password'}}) }}<br>
+    {#    <div class="input-group">
+            <span class="input-group-btn">
+                <span class=" btn-primary btn-file btn">
+                    Browse&hellip;     <input type="file" name="file" accept="image/gif, image/jpeg, image/png "<br>
+                </span>
+            </span>
+            <input type="text" class="form-control" readonly placeholder="LOGO">
+        </div><br>#}
+    <input type="checkbox" id="fos_user_registration_form_roles_0" name="fos_user_registration_form[roles][]" value="ROLE_APPRENANT" required >I have read and agree to <a>the Terms and Conditions</a><br><br><br>
+    <div>
+        <input type="submit" value="Next Step" class="btn-primary" />
+    </div>
+    {{ form_widget(form._token) }} {{ form_end(form, {'render_rest': false}) }}
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%  if  app.request.get('role') =='Formateur'  or  app.session.get('role')=='formateur' %}
+    {% if error  %}
+        {% if form_errors(form.email) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.email) }}<br>
+            </div>
+        {% endif %}
+
+        {% if form_errors(form.username) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.username) }}<br>
+            </div>
+        {% endif %}
+
+        {% if form_errors(form.plainPassword.first) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.plainPassword.first) }}<br>
+            </div>
+        {% endif %}
+        {% if form_errors(form.plainPassword.second) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.plainPassword.second) }}<br>
+            </div>
+        {% endif %}
+
+
+    {% endif %}
+
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'form'}}) }}<legend>Inscription Formateur</legend>
+    {{ form_widget(form.email, {'attr': {'class': 'form-control input-lg','placeholder':'email'}}) }}<br>
+    {{ form_widget(form.username, {'attr': {'class': 'form-control input-lg','placeholder':'username'}}) }}<br>
+    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control input-lg','placeholder':'password'}}) }}<br>
+    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control input-lg','placeholder':'repeate password'}}) }}<br>
+    {#    <div class="input-group">
+            <span class="input-group-btn">
+                <span class=" btn-primary btn-file btn">
+                    Browse&hellip;     <input type="file" name="file" accept="image/gif, image/jpeg, image/png "<br>
+                </span>
+            </span>
+            <input type="text" class="form-control" readonly placeholder="LOGO">
+        </div><br>#}
+    <input type="checkbox" id="fos_user_registration_form_roles_0" name="fos_user_registration_form[roles][]" value="ROLE_FORMATEUR" required>I have read and agree to <a>the Terms and Conditions</a> <br><br><br>
+
+    <div><input type="submit" value="Next Step" class="btn-primary" /></div>
+        {{ form_widget(form._token) }} {{ form_end(form, {'render_rest': false}) }}
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%  if  app.request.get('role') =='Entreprise'  or  app.session.get('role')=='entreprise' %}
+
+    {% if error  %}
+        {% if form_errors(form.email) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.email) }}<br>
+            </div>
+        {% endif %}
+
+        {% if form_errors(form.username) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.username) }}<br>
+            </div>
+        {% endif %}
+
+        {% if form_errors(form.plainPassword.first) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.plainPassword.first) }}<br>
+            </div>
+        {% endif %}
+        {% if form_errors(form.plainPassword.second) %}
+            <div class="alert alert-danger" role="alert" style="height: 80px;">
+                {{ form_errors(form.plainPassword.second) }}<br>
+            </div>
+        {% endif %}
+
+
+    {% endif %}
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'form'}}) }}<legend>Inscription Entreprise</legend>
+    {{ form_widget(form.email, {'attr': {'class': 'form-control input-lg','placeholder':'email'}}) }}<br>
+    {{ form_widget(form.username, {'attr': {'class': 'form-control input-lg','placeholder':'username'}}) }}<br>
+    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control input-lg','placeholder':'password'}}) }}<br>
+    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control input-lg','placeholder':'repeate password'}}) }}<br>
+    {#    <div class="input-group">
+            <span class="input-group-btn">
+                <span class=" btn-primary btn-file btn">
+                    Browse&hellip;     <input type="file" name="file" accept="image/gif, image/jpeg, image/png "<br>
+                </span>
+            </span>
+            <input type="text" class="form-control" readonly placeholder="LOGO">
+        </div><br>#}
+    <input type="checkbox" id="fos_user_registration_form_roles_0" name="fos_user_registration_form[roles][]" value="ROLE_ENTREPRISE" required>I have read and agree to <a>the Terms and Conditions</a> <br><br><br>
+    <div><input type="submit" value="Next Step" class="btn-primary" /></div>
+        {{ form_widget(form._token) }} {{ form_end(form, {'render_rest': false}) }}
+    {% endif %}

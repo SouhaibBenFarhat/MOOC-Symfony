@@ -1,0 +1,82 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block content %}
+    <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+    <section id="portfolio">
+        <div class="container">
+            <div id="page-2"></div>
+            <div class="container conteneur-page-invitation" id="page">
+                <div class="conteneur-msg">
+                    <div class="span12">
+                        <div id="custom-search-form" class="form-search form-horizontal pull-right">
+                            <div class="input-append span12">
+                                <input type="text" class="form-control" placeholder="Search" name="nom" id="nom">
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $('#nom').keyup(function () {
+
+                                            nom = $('#nom').val();
+                                            $.ajax({
+                                                method: "POST",
+                                                url: "{{ path('rechercher_formateur')}}",
+                                                data: {nom: nom},
+                                                beforeSend: function () {
+                                                    console.log("ça charge");
+                                                },
+                                                success: function (data) {
+                                                    console.log("ok ok ");
+                                                    $('#page-inner').html(data);
+
+
+
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+
+                    {% for formateur in formateurs %}
+
+
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="{{asset ('uploads/photos/man4.jpg')}}" alt="website template image" class="img-responsive"/>
+                                <h2><p><i class="fa fa-user"> {{ formateur.username }}</i><small><a href=""></a></small></p></h2>
+                                <h3>Specialite : </h3> 
+                                <h3>Site Web : </h3>
+                                {% for invitation in invitations %}
+                                    {% if formateur.id == invitation.idFormateur.id and invitation.idEntreprise.id == app.user.id  %}
+                                        <center>    <h3> <i class="glyphicon glyphicon-plus" disabled="true"></i></a></center>
+                                        {% endif %}
+                                        {% if   invitation.idEntreprise.id != app.user.id %}
+                                        <center>    <h3> <a href=""><i class="glyphicon glyphicon-plus"></i></a></center>
+                                                {% endif %}
+                                            {% endfor %}
+                            </div>
+                        </div>
+
+
+                    {% endfor %}
+
+
+
+                </div>
+
+
+                <!-- Footer -->
+                <!-- Fin Footer -->
+                <!-- Bootstrap core JavaScript
+                ================================================== -->
+            </div> <!-- /.modal -->
+
+        </div><!-- /.container -->
+
+
+    </section>	
+{% endblock %}

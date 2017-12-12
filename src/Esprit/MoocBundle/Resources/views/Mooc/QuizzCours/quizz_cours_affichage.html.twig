@@ -1,0 +1,155 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+
+{% block content %}
+
+
+    <script>
+
+        function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+                setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                        seconds = parseInt(timer % 60, 10);
+                        minutes = minutes < 10 ? "0" + minutes : minutes;
+                        seconds = seconds < 10 ? "0" + seconds : seconds;
+                        display.text(minutes + ":" + seconds);
+                        if (--timer < 0) {
+                timer = duration;
+                }
+                }, 1000);
+        }
+
+        jQuery(function ($) {
+        var fiveMinutes = 60 * {{ quizz.duree }},
+                display = $('#div_timerMinutes');
+                startTimer(fiveMinutes, display);
+        });</script>
+
+    <script type="text/javascript">
+                window.onload = function () {
+                var auto = setTimeout(function () {
+                autoRefresh();
+                }, 100);
+                        function submitform() {
+
+                        document.forms["myForm"].submit();
+                        }
+
+                function autoRefresh() {
+                clearTimeout(auto);
+                        auto = setTimeout(function () {
+                        submitform();
+                                autoRefresh();
+                        }, 1000 * 60 * {{quizz.duree}});
+                }
+                }
+    </script>
+    <script language="javascript">
+        function document.onkeydown() {
+        if (event.keyCode == 116) {
+        alert("MOVING AWAY");
+                window.location.href = "/choice_page/";
+                event.keyCode = 0;
+                event.cancelBubble = true;
+                return false; }
+        }
+    </script>
+    <br><br><br><br>
+    <nav class="navbar navbar-inverse" role="banner" style="    background-color: rgba(236,236,236,1); box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.61);">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h2 style="color: #333;">  <a class="navbar-brand" href=""></a>{{ quizz.titreQuizzCours }}</h2>
+            </div>
+
+        </div><!--/.container-->
+    </nav>
+    <nav class="navbar navbar-inverse" role="banner" style=" min-height: 5px; height: 35px;   background-color: rgb(155, 154, 154); box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.61);  margin-left: -100px;">
+        <div class="container" style="margin-top: -25px;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h3 style="color: #FFF;"> <i class="fa  fa-signal"> </i>&nbsp;<small style="color: white;"></small> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="" style="color: white;" data-toggle="modal" data-target="#myModalRating" > <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o" ></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-clock-o"></i><small style="color:  white;"> &nbsp;&nbsp;{{ quizz.duree }} minutes    </small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-video-camera"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-book"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-check"></i> <small style="color: white;">Certifier par World Elephent</small>
+                    <a class="navbar-brand" href="">
+                    </a>
+                </h3>
+            </div>
+        </div><!--/.container-->
+    </nav>
+
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+
+                <fieldset class="scheduler-border">
+                    <div class="col-md-9 col-md-offset-1">
+
+                        <h2>     
+                            <div  class="  col-md-4 col-md-offset-12" style="margin-top: -50px;">
+                                <div class="alert alert-warning">
+                                    <label>Il vous reste </label>    <label id="div_timerMinutes"></label>
+                                </div>
+                                <br>
+                            </div>
+                        </h2>
+                        <br><br><br>
+                        <form action="{{ path('calculer_score_quizz_cours') }}" method="post" class="form" accept-charset="ISO-8859-1" name="myForm" id="myForm"><legend><b> Titre Quizz:</b>  {{ quizz.titreQuizzCours }}</legend>
+                                    {%set  i=0 %}
+                                    {% set j=0 %}
+                                    {%  for q in question %} <br><br>
+                                {% set j=0 %}
+                                {% set  i=i+1%} <legend><b> Question {{ i }}: </b>    </legend> <u>{{ q.texteQuestion }} </u><br><br><br>
+                                    {% for r in reponse %}
+                                        {% if q.idQuestion == r.idQuestionReponse.idQuestion %}
+                                            {% set  j=j+1 %}
+                                            {% if r.etatReponse=='vrai'%}
+                                                {#   <div class="alert alert-success">   #}                              
+                                            <input type="checkbox" id="remember_me" name="checkbox{{ i }}{{ j }}" value="{{ r.etatReponse }}" class="" />
+                                            <input type="text" name="reponse{{i}}{{j}}" value="{{ r.texteReponse }}" hidden>{{ r.texteReponse }} <br>
+                                            {#</div>#}
+                                        {% else %}
+                                            {#  <div class="alert alert-danger">#}
+                                            <input type="checkbox" id="remember_me" name="checkbox{{ i }}{{ j }}" value="{{ r.etatReponse }}" class="" /> 
+                                            <input type="text" name="reponse{{i}}{{j}}" value="{{ r.texteReponse }}" hidden>{{ r.texteReponse }} <br>
+                                            {#  </div>#}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                            <br>
+                            <input type="text"   name="nombreQuestion" value="{{ i }}" class=" "hidden ><br>
+                            <input type="text"  name="nombreReponse" value="{{ j }}"  class=" "hidden><br>
+                            <br>
+                            <br>
+                            <div class="alert alert-warning">
+                                <legend style="border-bottom: 0px;"><b>Si vous cliquez Suivant, Vous n'avez plus le droit de refaire ce Quizz,<br> Merci de bien vérifier vos reponse avant de les validés</b></legend>
+                            </div>
+                            <br>
+                            <div>
+                                <input type="submit" value="Suivant" class='btn-primary' />
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+            </div>            
+        </div>
+    </section>
+{% endblock content %}

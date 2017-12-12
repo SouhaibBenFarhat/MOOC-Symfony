@@ -1,0 +1,42 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block titre %}Contact us{% endblock %}
+{% block content %} 
+    <br><br>
+    <section id="portfolio" style="margin-left: 30%">
+        <div class="container" id="wrap">
+            <div class="row">
+                
+                    <div class="col-sm-6">
+
+                        <h2> <strong>Contact us</strong> </h2>
+
+
+
+
+                        <p>{{form_errors(form)}}</p>
+
+                        <hr>
+                        <form role="form" id="fr" method="POST" action='{{path('my_app_mail_sendpage')}}' class="form-group" > 
+
+                            {{form_widget(form.nom,{'attr':{'class':'form-control','placeholder':'tapez votre nom'}})}}
+                            <br/>
+                            {{form_widget(form.prenom,{'attr':{'class':'form-control ','placeholder':'tapez votre prenom'}})}}
+                            <br/>
+                            {{form_widget(form.tel,{'attr':{'class':'form-control ','placeholder':'tapez votre telephone'}})}}
+                            <br/>
+                            {{form_widget(form.from,{'attr':{'class':'form-control ','placeholder':'tapez votre mail'}})}}
+                            <br/>
+                            {{form_widget(form.Sujet,{'attr':{'class':'form-control ','placeholder':'tapez votre sujet'}})}}
+                            <br/>
+                            {{form_widget(form.Description,{'attr':{'class':'form-control '}})}}
+                            <br/>
+                            {{form_widget(form.valider,{'attr':{'class':' btn-primary'}})}}
+
+                            {{form_rest(form)}}
+                        </form>
+                    </div>
+              
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block titre %}Modifier chapitre{% endblock %}
+{% block content %} 
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+    <br><br><br>
+    <div class="col-md-10 col-md-offset-1">
+        <a href="{{ path('esprit_mooc_home')}}"><small>Acceuil &nbsp;</small> </a><i class="fa fa-caret-right"></i> 
+        <a href="{{path('espace_formateur')}}"><small>&nbsp; My Dashboard &nbsp;</small> </a><i class="fa fa-caret-right"></i> 
+        <a href="{{path('mes_cours')}}"><small>&nbsp; Mes cours &nbsp;</small> </a><i class="fa fa-caret-right"></i> 
+        <a href="{{path('afficher_cours',{idCours:chapitre.idCoursChapitre.idCours})}}"><small>&nbsp; {{chapitre.idCoursChapitre.titreCours}}  &nbsp;</small> </a><i class="fa fa-caret-right"></i> 
+        <small>&nbsp; {{ chapitre.titreChapitre }} &nbsp;</small>
+    </div>
+    <br><br>
+    <nav class="navbar navbar-inverse" role="banner" style="    background-color: rgba(236,236,236,1); box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.61);">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h2 style="color: #333;">  <a class="navbar-brand" href=""></a> Chapitre {{ "now"|date("F jS ")}}</h2>
+            </div>
+        </div><!--/.container-->
+    </nav>
+    <nav class="navbar navbar-inverse" role="banner" style=" min-height: 5px; height: 35px;   background-color: rgb(155, 154, 154); box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.61);  margin-left: -100px;">
+        <div class="container" style="margin-top: -25px;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h3 style="color: #FFF;"> <i class="fa  fa-user"> </i>&nbsp;<small style="color: white;">&nbsp; {{ app.user.username }}</small> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-clock-o"></i><small style="color:  white;"> &nbsp;{{ "now"|date("g:ia")}} </small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-check"></i> <small style="color: white;">Certifier par World Elephent</small>
+                    <a class="navbar-brand" href="">
+                    </a>
+                </h3>
+            </div>
+        </div><!--/.container-->
+    </nav> 
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1" align="left" >
+                    <form action="{{ path('modifier_chapitre',{idChapitre:chapitre.idChapitre}) }}" method="POST"  class="form" role="form" enctype="multipart/form-data">   <legend>{{ chapitre.titreChapitre }}</legend>
+                        <input type="text" class="form-control" name="titre" placeholder="titre"  required value="{{ chapitre.titreChapitre }}"> <br>
+                        <select class="form-control" name="cours" required>
+                            <option value="">--Select One--</option>
+                            {% for c in cours %}
+                                <option value="{{c.idCours}}"
+                                        {% if chapitre.idCoursChapitre.idCours==c.idCours %}
+                                            selected="selected"
+                                        {% endif %}
+                                        >{{c.titreCours }}</option>
+                            {% endfor %}
+                        </select> <br>
+                        <select class="form-control " name="niveau" required>
+                            <option value="">--Select One--</option>
+                            <option value="Facile"
+                                    {% if chapitre.niveauChapitre=="Facile" %}
+                                        selected="selected"
+                                    {% endif %}
+                                    >Facile</option>
+                            <option value="Normale"
+                                    {% if chapitre.niveauChapitre=="Normale" %}
+                                        selected="selected"
+                                    {% endif %}
+                                    >Normale</option>
+                            <option value="Difficile"
+                                    {% if chapitre.niveauChapitre=="Difficile" %}
+                                        selected="selected"
+                                    {% endif %}
+                                    >Difficile</option>
+                            <option value="Extreme"
+                                    {% if chapitre.niveauChapitre=="Extreme" %}
+                                        selected="selected"
+                                    {% endif %}
+                                    >Extreme</option>
+                        </select> <br>
+
+                        <input type="number" class="form-control" name="duree" placeholder="durée du chapitre en Heurs" required value="{{ chapitre.dureeChapitre }}"><br>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="video" accept="video/*"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="Video" required>
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="file" accept="application/pdf"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="PDF file " required>
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class=" btn-primary btn-file btn">
+                                    Browse&hellip; <input type="file"  name="presentation" accept="application/pdf"  required>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly placeholder="PDF file Presentation " required>
+                        </div><br>
+                        </div>
+
+                        <div class="col-md-7 col-md-offset-1">
+                            <textarea  class="form-control" name="introduction" placeholder="Introduction..." required rows="4">{{ chapitre.IntroductionChapitre }}</textarea><br>
+                            <label class="">Description</label> <br>
+                            <div class="span7">
+                                <textarea  class="ckeditor" name="description" placeholder="description" required rows="10">{{ chapitre.descriptionChapitre | raw }}</textarea><br>
+                            </div>
+                            <label class="">Objectif</label> <br>
+                            <div class="span7">
+                                <textarea class="ckeditor" name="objectif" placeholder="objectif" required rows="10">{{ chapitre.objectifChapitre | raw }}</textarea><br>
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <label class="">Rediger Votre Chapitre</label> <br>
+                            <div class="span7">
+                                <textarea class="ckeditor" name="contenu" placeholder="prerequis cour" required rows="20">{{ chapitre.contenuChapitre | raw }}</textarea><br>
+                            </div>
+                            <br>
+                            {% for flashMessage in app.session.flashbag.get('notice') %}
+                                <div class="alert alert-success">
+                                    {{ flashMessage }}
+                                </div>
+
+                            {% endfor %}
+                            <br />
+                            <input type="submit" name="" value="Finish" class="btn btn-primary">
+                        </div>
+                    </form>  
+
+
+                </div>
+            </div>            
+        </div>
+    </div>
+</section>
+{% endblock %}

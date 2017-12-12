@@ -1,0 +1,70 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block content %}
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+    {% if app.request.get('notice') =='success' %}
+        <script>
+            $(document).ready(function () {
+                $.notify("Envoyé", "success");
+            });
+        </script>
+    {% endif %}
+
+    {% if app.user.id == discussion.idUtilisateurSource.id%}
+        {% set destination=discussion.idUtilisateurDestination.id %}
+    {% else %}
+        {% set destination=discussion.idUtilisateurSource.id %}
+    {% endif %}
+
+    <br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-sm-9 col-xs-12 col">
+                <h4 id="addComment"><legend>Mes messages privés</legend></h4>
+                <a href="#rep" class=" pull-right btn-primary" style="background: #007986">Répondre </a><br><br>
+
+
+                <ul class="media-list comments">
+                    {% for message in messages %}
+                        <li class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle img-thumbnail" src="{{asset('uploads/userPhoto/' ~ message.idUtilisateurSource.userPhoto.path )}}" width="64" style="    height: 64px;"alt="Generic placeholder image">
+                            </a>            
+                            <div class="media-body">
+                                <br>
+                                <h5 class="media-heading pull-left">{{ message.idUtilisateurSource.username }}</h5>
+                                <div class="comment-info pull-left" style="margin-top: -10px; margin-left: 10px;">
+                                    <div class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Sent from ***0.0.1" style=" font-size: 0.8em; padding: 1px 5px;   font-size: 12px; line-height: 1.5;    border-radius: 3px;"><i class="fa fa-user"></i></div>
+                                    <div class="btn btn-primary btn-xs" style="padding: 1px 5px; font-size: 12px;     line-height: 1.5;   border-radius: 3px;   color: #fff;
+                                         background-color: #428bca;
+                                         border-color: #357ebd;">
+                                        <a class="fa fa-envelope white" href="mailto:loneswan@loneswan.net" style="    color: #fff;"></a></div>
+                                    <div class="btn btn-default btn-xs" style="padding: 1px 5px;  font-size: 12px;  line-height: 1.5;   border-radius: 3px;"><i class="fa fa-clock-o"></i> {{ message.dateEnvoi|date("F jS \\a\\t g:ia")  }}</div>
+                                </div>
+                                <br class="clearfix">
+                                {#  <p class="well">{{ message.titreMessage }}</p>#}
+                                <div class="col-md-12 col-sm-12">	
+                                    <div class="single-profile-top wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                        <div class="media">
+                                        </div><!--/.media -->
+                                        <p>{{ message.contenuMessage| raw }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="" class="row">              
+                <div class="col-md-7 col-md-offset-1" id="rep">
+                    <br><br><br><br><br>
+                    <form class="form" method="post"  role="form" action="{{ path('envoyer_message_discussion',{idDestinataire:destination,idDiscussion:discussion.id}) }}">
+                        <legend><b>Répondre</b></legend><br>
+                        <textarea  class="ckeditor" rows="10" name="contenuMessage" required></textarea><br>
+                        <input type="submit" class="btn-primary pull-right" value="Envoyer" >
+                    </form>
+                </div>                 
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

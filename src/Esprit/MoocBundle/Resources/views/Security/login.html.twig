@@ -1,0 +1,50 @@
+{% extends "EspritMoocBundle::layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% block fos_user_content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <section id="portfolio">
+        <div class="container" id="wrap">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    {% if app.request.get('notice') == 'formateur' or app.request.get('notice') =='Entreprise' %}
+                        <div class="alert alert-info" role="alert"> Your Account Has Been Locked, Please Check Your Mail Next Time </div>
+                    {% endif %}
+
+                    <div class="col-sm-12" >
+                        <form action="{{ path("fos_user_security_check") }}" method="post" class="form"><legend><b> Sign In</b></legend>
+                                    {% if error %}
+                                        {% if   error.messageKey|trans(error.messageData, 'security') == 'Account is locked.' %}
+                                    <div class="alert alert-infonfo" role="alert"> <b>Your Account Is locked, Welcome Back Next Time </b> </div>
+                                {% else %}
+                                    <div class="alert alert-danger" role="alert"> {#{{ error.messageKey|trans(error.messageData, 'security') }}#} login or password incorrect </div>
+
+                                {% endif %}
+                            {% endif %}
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"   />
+
+                            {#<label for="username">{{ 'security.login.username'|trans }}</label>#} <br>
+                            <input type="text" id="username" name="_username"  class="form-control" value="{{ last_username }}" required="required"  placeholder='username' pattern=".{5,40}" required title="5 to 10 characters"/><br>
+
+                            {#<label for="password">{{ 'security.login.password'|trans }}</label>#}
+                            <input type="password" id="password" name="_password" class="form-control" required="required" placeholder='password' />
+                            <a href="{{ path('fos_user_resetting_request') }}"> mot de passe oublié</a><br><a href="{{ path('choix_inscription')  }}">Register</a><br>
+                            <div class="checkbox">
+                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="" /> <label for="remember_me" class="checkbox-inline">{{ 'security.login.remember_me'|trans }}</label><br>
+                            </div>          
+
+
+                            <input type="submit" id="_submit" name="_submit" class=" btn-primary" value="{{ 'security.login.submit'|trans }}" />
+                            <br><br><br>
+                        </form>
+
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+</section>
+{% endblock fos_user_content %}

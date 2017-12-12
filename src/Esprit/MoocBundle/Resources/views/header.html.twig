@@ -1,0 +1,254 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Portfolio | Corlate</title>
+        <link href="{{asset ('bundles/espritmooc/css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/font-awesome.min.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/prettyPhoto.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/animate.min.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/main.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/responsive.css')}}" rel="stylesheet">
+        <link href="{{asset ('bundles/espritmooc/css/sweet-alert.css')}}" rel="stylesheet">
+
+
+
+
+
+
+    </head><!--/head-->
+
+
+    <body>
+
+        <header id="header">
+            <div class="top-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-4">
+                        </div>
+                        <div class="col-sm-6 col-xs-8">
+                            <div class="social">
+                                <ul class="social-share">
+                                </ul>
+                            </div>
+                        </div>
+                        <!---Modal login--->
+                        <div class="col-sm-6 col-xs-8">
+
+                            <!-- BEGIN # MODAL LOGIN -->
+                            <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header" align="center">
+                                            <img class="img-circle" id="img_logo" src="{{asset ('bundles/espritmooc/images/ele.jpg')}}">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Begin # DIV Form -->
+                                        <div id="div-forms">
+
+                                            <!-- Begin # Login Form -->
+                                            <form id="login-form">
+                                                <div class="modal-body">
+                                                    <div id="div-login-msg">
+
+                                                        <span id="text-login-msg">Type your username and password.</span>
+                                                    </div>
+                                                    <input id="login_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
+                                                    <input id="login_password" class="form-control" type="password" placeholder="Password" required>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div>
+                                                        <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                                                    </div>
+                                                    <div>
+                                                        <button id="login_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
+                                                        <a href="pricing.html"><button id="login_register_btn" type="button" class="btn btn-link">Register</button></a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!-- End # Login Form -->
+
+                                            <!-- Begin | Lost Password Form -->
+                                            <form id="lost-form" style="display:none;">
+                                                <div class="modal-body">
+                                                    <div id="div-lost-msg">
+                                                        <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
+                                                        <span id="text-lost-msg">Type your e-mail.</span>
+                                                    </div>
+                                                    <input id="lost_email" class="form-control" type="text" placeholder="E-Mail (type ERROR for error effect)" required>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div>
+                                                        <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+                                                    </div>
+                                                    <div>
+                                                        <button id="lost_login_btn" type="button" class="btn btn-link">Log In</button>
+                                                        <a href="pricing.html"><button id="lost_register_btn" type="button" class="btn btn-link">Register</button></a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!-- End | Lost Password Form -->
+
+
+
+                                        </div>
+                                        <!-- End # DIV Form -->
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END # MODAL LOGIN -->	 
+                        </div>
+
+                    </div>
+                </div><!--/.container-->
+            </div><!--/.top-bar-->
+
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="banner">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="index.html"><img src="{{asset('bundles/espritmooc/images/logo.png')}}" alt="logo"></a>
+                    </div>
+                    <div class="collapse navbar-collapse nav-wil">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a class="hvr-overline-from-center button2" href="{{path('esprit_mooc_home')}}">Home</a></li>
+                                {#<li><a href="{{path('esprit_mooc_technologies')}}">Technologies</a></li>#}
+
+                            <li class="dropdown"><a href="" target="_blank" class="dropdown-toggle" data-toggle="dropdown">Our Courses <i class="fa fa-angle-down"></i></a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{path('esprit_mooc_cours')}}"> liste des cours</a></li>
+
+                                    <li><a href="{{path('esprit_mooc_details_cours')}}">un cours</a></li>
+                                    <li><a href="{{path('esprit_mooc_chapitre')}}">un chapitre</a></li>
+                                </ul>
+
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{path('admin_liste_apprenant')}}">students</a></li>
+                                    <li><a href="{{path('admin_liste_formateur')}}">formaters</a></li>
+                                    <li><a href="{{path('esprit_mooc_entreprises')}}">entreprises</a></li>
+                                    <li><a href="{{path('admin_liste_inscri_entreprise')}}">entreprises à valider</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Student <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{path('apprenant_bibliotheque')}}">bibliotheque</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">formater <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{path('formateur_profil')}}">profil</a></li>
+                                    <li><a href="{{path('formateur_liste_invi')}}"> invitations reçu</a></li>
+                                    <li><a href="{{path('formateur_signUp')}}">sign up</a></li>
+                                    <li><a href="{{path('formateur_ajout_cours')}}">ajout cours</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Entreprise <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{path('entreprise_liste_invi')}}">liste invitations reçus</a></li>
+                                    <li><a href="{{path('profile_entreprise')}}">profil</a></li>
+                                    <li><a href="{{path('entreprise_profil_formateur')}}">profil formateur</a></li>
+
+                                    <li><a href="{{path('entreprise_signUp')}}">sign up</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Comite <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{path('comite_liste_cours_a_valider')}}">cours à valider </a></li>
+                                    <li><a href="{{path('comite_demande_inscr_formateur')}}">formateurs à valider</a></li>
+
+                                </ul>
+                            </li>
+
+
+
+
+                            <li><a href="" class="btn btn-primary" data-toggle="modal" data-target="#login-modal">Sign in</a>                       </li>
+
+                            <li><a href="{{path ('apprenant_sign_up')}}" class="btn btn-primary">Signup</a></li>
+                        </ul>
+                    </div>
+                </div><!--/.container-->
+
+            </nav><!--/nav-->
+
+        </header>
+    <body>
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    <section id="main-slider" class="no-margin">
+                        <div class="carousel slide">
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </body>
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <i class=""></i><i class="fa fa-heart"></i>
+                     2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                </div>
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Faq</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>

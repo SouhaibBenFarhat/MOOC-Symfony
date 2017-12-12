@@ -1,0 +1,169 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block titre %} Mes cours {% endblock %}
+{% block content %}
+    <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+    {% if app.request.get('notice') =='success' %}
+        <script>
+            $(document).ready(function () {
+                $.notify("Modification réussi ", {
+                    className: 'success',
+                    clickToHide: true,
+                    autoHide: false,
+                    globalPosition: 'left bottom'
+                });
+            });
+        </script>
+    {% endif %}
+    <br><br><br>
+    {% set av=0 %}
+
+    <div class="col-md-6 col-md-offset-1">
+        <a href="{{ path('esprit_mooc_home')}}"><small>Acceuil &nbsp;</small> </a><i class="fa fa-caret-right"></i> 
+        <a href="{{path('espace_formateur')}}"><small>&nbsp; My Dashboard &nbsp;</small> </a><i class="fa fa-caret-right"></i> 
+        <small>&nbsp; mes parcours &nbsp;</small>
+    </div>
+    <br><br>
+    <nav class="navbar navbar-inverse" role="banner" style="    background-color: rgba(236,236,236,1); box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.61);">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h2 style="color: #333;">  <a class="navbar-brand" href=""></a> Mes parcours {{ "now"|date("F jS ")}}</h2>
+            </div>
+        </div><!--/.container-->
+    </nav>
+    <nav class="navbar navbar-inverse" role="banner" style=" min-height: 5px; height: 35px;   background-color: rgb(155, 154, 154); box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.61);  margin-left: -100px;">
+        <div class="container" style="margin-top: -25px;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h3 style="color: #FFF;"> <i class="fa  fa-user"> </i>&nbsp;<small style="color: white;">&nbsp; {{ app.user.username }}</small> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-clock-o"></i><small style="color:  white;"> &nbsp;{{ "now"|date("g:ia")}} </small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-check"></i> <small style="color: white;">Certifier par World Elephent</small>
+                    <a class="navbar-brand" href="">
+                    </a>
+                </h3>
+            </div>
+        </div><!--/.container-->
+    </nav>
+    <div class="container"><br><br>
+        <div class="col-md-offset-9">
+            <ul class=" pagination">
+                <form role="form" action="" method="POST">
+                    <input type="text" class="form-control " autocomplete="off" placeholder="Search Here" name="nomForum">
+                </form> 
+            </ul>
+        </div>
+        <h1 class="page-header"></h1>
+        <p class="lead">    
+
+        </p>
+        <div class="row">
+            <div id="users-management" class="col-md-9 col-md-offset-1">
+                <div class="panel-group" id="accordion">
+                    {% set i=1 %}
+                    {% for discipline in disciplines %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="background-color: #FFFFFF">
+                                <h4 class="panel-title">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapse-{{i}}"><img src="{{asset ('uploads/discipline/logo/' ~ discipline.idDisciplineSuivi.logo )}}" class="img-circle" width="100px" height="100px">
+                                        {{ discipline.idDisciplineSuivi.nomDiscipline | raw}} <small></small>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse-{{i}}" class="panel-collapse in">
+                                <div class="panel-body">
+                                </div>
+                                <div style="background-color: white;">
+                                    {% set j=0 %}
+                                    {% for progression in progressions %}
+                                        {% set somme=0 %}
+                                        {% set nbQuizzChapitre=0 %}
+                                        {% set scoreQC=0 %}
+                                        {% if progression.idCoursProgression.idDisciplineCours.idDiscipline==discipline.idDisciplineSuivi.idDiscipline and progression.idChapitreProgression==null %}
+                                            <a class="accordion-toggle"  style="margin-left: 150px;"
+                                               href="{{ path('esprit_mooc_details_cours',{idCours:progression.idCoursProgression.idCours}) }}"> <small></small>
+                                                <img src="{{asset ('uploads/discipline/logo/livre.png')}}" class="img-circle" width="30px" height="30px">     {{ progression.idCoursProgression.titreCours | raw}} <small></small>
+                                            </a><br>
+                                            {% set av=0 %}
+                                            {% for prog in progressions %}
+                                                {% if  prog.idChapitreProgression is not null %}
+                                                    {% if prog.idChapitreProgression.idCoursChapitre.idCours==progression.idCoursProgression.idCours  and prog.idChapitreProgression is not null %}
+                                                        <a href="{{ path('afficher_chapitre',{idCours:prog.idChapitreProgression.idCoursChapitre.idCours ,idChapitre:prog.idChapitreProgression.idChapitre}) }}" style="margin-left: 200px;"><img src="{{asset ('uploads/discipline/logo/chapitre.png')}}" class="img-circle" width="25px" height="25px"> 
+                                                            {{ prog.idChapitreProgression.titreChapitre }}</a>&nbsp;<i class="fa fa-check"></i><br>
+                                                            {% for sqc in scoreQuizzChapitre %}
+                                                                {% if sqc.idQuizzChapitreScoreQuizzChapitre.idChapitreQuizzEntrainement.idChapitre==prog.idChapitreProgression.idChapitre  %}
+                                                                <a href="{{ path('correction_quizz_chapitre',{idChapitre:sqc.idQuizzChapitreScoreQuizzChapitre.idChapitreQuizzEntrainement.idChapitre}) }}" style="margin-left: 250px;"> <img src="{{asset ('uploads/discipline/logo/logo_trophy.png')}}" class="img-circle" width="25px" height="25px">
+                                                                    {{ sqc.idQuizzChapitreScoreQuizzChapitre.titreQuizzEntrainement }}</a> &nbsp;&nbsp;<b>{{ sqc.scoreQuizzChapitre }}/20 
+                                                                    {% set somme=somme+sqc.scoreQuizzChapitre %}  {% set nbQuizzChapitre=nbQuizzChapitre+1 %}</b>&nbsp;&nbsp;
+                                                                {% if sqc.scoreQuizzChapitre >=10 %} <i class="fa fa-thumbs-o-up"></i>{% else %}<i class="fa fa-thumbs-o-down"></i> {% endif %}
+                                                                <br>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% set av=av+1 %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for sqc in scoreQuizzCours %}
+                                                {% if progression.idCoursProgression.idCours==sqc.idQuizzCoursScoreQuizzCours.idCoursQuizzCours.idCours %}
+                                                    <a href="{{ path('correction_quizz_cours',{idCours:sqc.idQuizzCoursScoreQuizzCours.idCoursQuizzCours.idCours}) }}" style="margin-left: 150px;"> <img src="{{asset ('uploads/discipline/logo/certif.png')}}" class="img-circle" width="30px" height="30px">     
+                                                        {{sqc.idQuizzCoursScoreQuizzCours.titreQuizzCours}}  &nbsp;&nbsp;     </a><b>{{ sqc.scoreScoreQuizzCours }}/20</b>&nbsp;&nbsp;
+                                                        {% set scoreQC=sqc.scoreScoreQuizzCours %}
+                                                        {% if sqc.scoreScoreQuizzCours>=10 %} <i class="fa fa-thumbs-o-up"></i>{% else %}<i class="fa fa-thumbs-o-down"></i> {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            <br><br>
+                                            <div class="col-md-6 col-md-offset-3 ">
+                                                <div class="panel-body">
+                                                    <div class="progress" style="    background-color: #f5f5f5; border-radius: 4px; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1); line-height: 25px;">
+                                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{(av*100)/progression.idCoursProgression.nombreChapitreCours}}" aria-valuemin="0" aria-valuemax="100" style="width: {{(av*100)/progression.idCoursProgression.nombreChapitreCours}}%;     background-color: #5CB85C;" >
+                                                            <center>  {{(av*100)/progression.idCoursProgression.nombreChapitreCours}}%</center>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% if nbQuizzChapitre!=0 %}
+                                                    <b> Moyenne Générale : {{ somme/nbQuizzChapitre*0.6+scoreQC*0.4 }}</b><br>      <br><br>
+                                                {% endif %}
+                                            </div>
+                                      
+                                            <legend></legend>
+
+                                            {% set j=j+1 %}
+                                        {% endif %}
+                                    {% endfor %}        
+                                    {%  if j==0%} <i style="margin-left: 100px;">vous avez commencé aucun cours, vous voulez commencé? <b><a href="">cliquez içi</a></b></i><br><br>{% endif %}
+                                    <br>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="btn-group btn-group-xs">
+                                        <span class="btn"> </span><a class="btn btn-success" href="#"><i class="fa fa-thumbs-up"></i></a>  
+                                        <span class="btn"> </span><a class="btn btn-success" href="#"><i class="fa fa-eye"></i> </a> 
+                                        <span class="btn"> </span><a class="btn btn-success" href="#"><i class="fa fa-users"></i>  </a> 
+                                        <span class="btn"> </span><a class="btn btn-success" href="#"><i class="fa fa-calendar"></i>  </a> 
+                                        <span class="btn"> </span><a class="btn btn-success" href=""><i class="fa fa-plus"></i> </a>  
+                                        <span class="btn"> </span><a class="btn btn-success" href=""><i class="fa fa-trophy"></i>  </a>
+                                        <span class="btn"> </span><a disabled class="btn btn-success" href=""><i class="fa fa-trophy"></i>   </a> 
+                                        <span class="btn"> </span><a  class="btn btn-success" href=""><i class="fa fa-trophy"></i>  </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% set i=i+1 %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

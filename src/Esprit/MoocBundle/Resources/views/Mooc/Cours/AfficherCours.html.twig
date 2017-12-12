@@ -1,0 +1,118 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+{% block content %}
+    <script src="{{asset ('bundles/espritmooc/js/jquery.js')}}"></script>
+    <script src="{{asset ('bundles/espritmooc/ckeditor/ckeditor.js')}}"></script>
+
+    {% if app.request.get('notice') =='supp' %}
+        <script>
+            $(document).ready(function () {
+                $.notify("Suppression réussit", "success");
+            });
+        </script>
+    {% endif %}
+    <br><br><br>
+    <div class="col-md-6 col-md-offset-1">
+        <a href="{{ path('esprit_mooc_home')}}"><small>Acceuil &nbsp;</small> </a><i class="fa fa-caret-right"></i> 
+        <a href="{{path('espace_formateur')}}"><small>&nbsp; My Dashboard &nbsp;</small> </a><i class="fa fa-caret-right"></i> 
+        <a href="{{path('mes_cours')}}"><small>&nbsp; Mes cours &nbsp;</small> </a><i class="fa fa-caret-right"></i> 
+        <a href="{{path('afficher_cours',{idCours:cours.idCours})}}"><small>&nbsp; {{cours.titreCours}}  &nbsp;</small> </a><i class="fa fa-caret-right"></i> 
+        <small>&nbsp; Chapitres &nbsp;</small>
+    </div>
+    <br><br>
+    <nav class="navbar navbar-inverse" role="banner" style="    background-color: rgba(236,236,236,1); box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.61);">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h2 style="color: #333;">  <a class="navbar-brand" href=""></a> Mes Cours : {{ cours.titreCours }}: Chapitres<h4><small> {{ "now"|date("F jS ")}}</small></h4></h2>
+            </div>
+
+        </div><!--/.container-->
+    </nav>
+    <nav class="navbar navbar-inverse" role="banner" style=" min-height: 5px; height: 35px;   background-color: rgb(155, 154, 154); box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.61);  margin-left: -100px;">
+        <div class="container" style="margin-top: -25px;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h3 style="color: #FFF;"> <i class="fa  fa-user"> </i>&nbsp;<small style="color: white;">&nbsp; {{ app.user.username }}</small> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-clock-o"></i><small style="color:  white;"> &nbsp;{{ "now"|date("g:ia")}} </small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-check"></i> <small style="color: white;">Certifier par World Elephent</small>
+                    <a class="navbar-brand" href="">
+                    </a>
+                </h3>
+            </div>
+        </div><!--/.container-->
+    </nav>
+    <div class="container">
+        <h1 class="page-header">User management</h1>
+        <p class="lead"></p>
+        <div class="row">
+            <div id="users-management" class="col-md-9 col-md-offset-2">
+                <div class="panel-group" id="accordion">
+                    {% set i=1 %}
+                    {% for chapitre in chapitres %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="background-color: #FFFFFF">
+                                <h4 class="panel-title">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapse-{{i}}"><img src="{{asset ('uploads/discipline/logo/' ~ chapitre.idCoursChapitre.idDisciplineCours.logo )}}" class="img-circle" width="100px" height="100px">
+                                        {{ chapitre.titreChapitre | raw}} <small></small>
+                                    </a>
+                                    <div class="btn-group pull-right"><a href="{{ path('modifier_chapitre',{idChapitre:chapitre.idChapitre}) }}" class="btn btn-warning" {#data-toggle="modal" data-target="#myModalUpdate{{i}}"#} style="background-color: #0097A7; border-color: white;"><i class="fa fa-pencil"></i><span> </span></a><a href="#"  data-toggle="modal" data-target="#myModalSupp{{i}}" class="btn btn-danger" style="background-color: #007986; border-color: white;"><i class="fa fa-times"></i><span> </span></a></div>
+                                </h4>
+                            </div>
+                            <div id="collapse-{{i}}" class="panel-collapse in">
+                                <div class="panel-body">
+                                </div>
+                                <div style="background-color: white;"><br>
+                                    {{ chapitre.descriptionChapitre |raw }}<br><a href="{{ path('modifier_chapitre',{idChapitre:chapitre.idChapitre}) }}" class="">Afficher le reste</a><br><br>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="btn-group btn-group-xs">
+                                        <span class="btn"> </span><a class="btn btn-success" href="#"><i class="fa fa-thumbs-up"></i></a>  
+                                        <span class="btn"> </span><a class="btn btn-success" href="#"><i class="fa fa-eye"></i> </a> 
+                                        <span class="btn"> </span><a class="btn btn-success" href="#"><i class="fa fa-users"></i> </a> 
+                                        <span class="btn"> </span><a class="btn btn-success" href="#"><i class="fa fa-calendar"></i> {{ chapitre.dateAjout | date("F jS \\a\\t g:ia") }} </a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myModalSupp{{i}}" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Supprimer</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="alert alert-danger">
+                                            <label>Etes vous sûr de supprimer {{chapitre.titreChapitre}}?</label>
+                                        </div>
+                                        <a href="" class=" pull-left btn-primary">Supprimer</a><br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class=" btn-primary" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% set i=i+1 %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

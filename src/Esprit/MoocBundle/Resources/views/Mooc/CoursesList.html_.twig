@@ -1,0 +1,188 @@
+{% extends "EspritMoocBundle::Layout.html.twig" %}
+
+{% block content %} 
+    <br/><br/><br><br><br>
+    <nav class="navbar navbar-inverse" role="banner" style="    background-color: rgba(236,236,236,1); box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.61);">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1>  <a class="navbar-brand" href="{{path('esprit_mooc_cours')}}"></a></h1>
+            </div>
+            <br><br><br>
+        </div><!--/.container-->
+    </nav>
+    <section id="portfolio">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-3 col-lg-offset-0" style="background-color: #ECECEC; margin-left:  -85px; border-radius: 25px;">
+                    <div style="margin-top: -210px">
+
+                    </div><br><br><br>
+                    <div class="widget search ">
+                        <form role="form">
+                            <input type="search" class="form-control search_box" autocomplete="off" placeholder="Search Here">
+                        </form>
+                    </div><!--/.search-->
+
+
+                    <div class="widget blog_gallery">
+                        <h3>Cours Format</h3>
+                        <ul class="sidebar-gallery">
+
+                            <li><a href="#"><span class="fa fa-book fa-2x"></span></a></li>
+                            <li><a href="#"><span class="fa fa-camera fa-2x"></span></a></li>
+                            <li><a href="#"><span class="fa fa-desktop fa-2x"></span></a></li>
+                            <li><a href="#"><span class=" fa fa-trophy fa-2x "></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="widget categories">
+                        <h3>Categories</h3>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="blog_archieve">
+                                    {% for discipline in disciplines %}
+                                        <li><a href="{{ path('cours_by_discipline',{idDiscipline:discipline.idDiscipline}) }}">{{ discipline.nomDiscipline }} </a></li>
+                                        {% endfor %}
+                                    <li><a href="{{ path('esprit_mooc_cours') }}">Tous les cours </a></li>
+                                </ul>
+                            </div>
+                        </div>                     
+                    </div><!--/.categories-->
+
+                    <div class="widget archieve">
+                        <h3>Formateur</h3>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="blog_archieve">
+                                    {% set i=0 %}
+
+                                    {% for formateur in formateurs %}
+                                        {% if i < 4 %}
+                                            {% set i=i+1 %}
+                                            <li><a href="{{ path('fos_user_profile_show_with_id',{id:formateur.formateur.id})}}">{#<i class="fa fa-angle-double-right"></i>#}{{ formateur.formateur.username }}{#<span class="pull-right">(97)</span>#}</a></li>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>                     
+                    </div><!--/.archieve-->
+
+                    <div class="widget tags">
+                        <h3>Tag Cloud</h3>
+                        <ul class="tag-cloud">
+                            <li><a class="btn btn-xs btn-primary" href="#">Apple</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Barcelona</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Office</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Ipod</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Stock</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Race</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">London</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Football</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Porche</a></li>
+                            <li><a class="btn btn-xs btn-primary" href="#">Gadgets</a></li>
+                        </ul>
+                    </div><!--/.tags-->
+
+                    <div class="widget blog_gallery">
+                        <h3>Our Gallery</h3>
+                        <ul class="sidebar-gallery">
+                            <li><a href="#"><img src="images/blog/gallery1.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery2.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery3.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery4.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery5.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/blog/gallery6.png" alt=""></a></li>
+                        </ul>
+                    </div><!--/.blog_gallery-->
+
+
+                </aside>
+
+
+
+                <div class="col-md-9" style="margin-left: 50px;">
+
+
+                    {#       <div class="center wow fadeInDown animated animated" style="visibility: visible; animation-name: fadeInDown;">
+                               <h2>Courses</h2>
+                               <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+                           </div>#}
+
+
+                    {% for cours in pagination %}
+                        {#                <div class="col-sm-7 col-md-4">
+                
+                                                {% if loop.index is odd %}class="color"{% endif %}
+                                            <div class="media services-wrap wow fadeInDown animated animated" style="visibility: visible; animation-name: fadeInDown;">
+                                                <div class="pull-left col-md-6">
+                                                    <img class="img-responsive" src="{{asset ('bundles/espritmooc/images/services/courses/course.png')}}">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading">{{ cours.titreCours }}</h5>by  <a href="{{ path('fos_user_profile_show_with_id',{id:cours.idFormateurCours.id})}}">{{cours.idFormateurCours.username}}</a><br/>
+                                                     <p>{{ cours.descriptionCours[:20] | raw }}...</p>
+                                                    <a href="{{ path('esprit_mooc_details_cours',{id:cours.idCours})}}">Lire la suite</a><br/>
+                                                    <a href="{{ path('apprenant_ajout_cour',{id:cours.idCours})}}">Ajout Bibliotheque</a>
+                                                </div>
+                                            </div>
+                
+                
+                                        </div>   #}
+                        {#            <div class="col-sm-6 col-md-4"style="padding-left: 10px; margin-top: -80px;">
+                                        <div class="media services-wrap wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+                                            <div class="pull-left">
+                                                <img class="img-responsive" src="{{asset ('uploads/discipline/logo/' ~ cours.idDisciplineCours.logo )}}">
+                                            </div>#}
+                        {#<div class="media-body">#}
+                        {#                 <h3 class="media-heading"><h5 class="media-heading">{{ cours.titreCours }}</h5>by  <a href="{{ path('fos_user_profile_show_with_id',{id:cours.idFormateurCours.id})}}">{{cours.idFormateurCours.username}}</a></h3>
+                                         <p> <a href="{{ path('apprenant_ajout_cour',{id:cours.idCours})}}">Ajout Bibliotheque</a></p>
+                                         <p>    <a href="{{ path('esprit_mooc_details_cours',{id:cours.idCours})}}">Lire la suite</a></p>#}
+                        {#   </div>#}
+                        {#             </div>
+                                 </div>#}
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail"><img src="{{asset ('uploads/discipline/logo/' ~ cours.idDisciplineCours.logo )}}" alt="website template image" class="img-responsive">
+                                <div class="caption">
+                                    <h6><p class=" text-uppercase">{{ cours.titreCours[:25] ~ '...'}}</p></h6>
+                                    <p><h3><small>{{ cours.introductionCours[:150] ~ '...' }}<a href="{{ path('esprit_mooc_details_cours',{id:cours.idCours})}}" role="" class="">Details</a></small></h3></p>
+                                    <p><i class="fa fa-user"></i> <small><a href="{{ path('fos_user_profile_show_with_id',{id:cours.idFormateurCours.id})}}">{{cours.idFormateurCours.username}}</a></small></p>
+                                    <p><i class="fa fa-check"></i> <small>World elepehent</small></p> 
+
+                                    <div class=" btn-toolbar text-center">{#<a href="{{ path('esprit_mooc_details_cours',{id:cours.idCours})}}" role="button" class=" btn-primary pull-right">Details</a>#}
+                                        <a href="{{ path('esprit_mooc_details_cours',{id:cours.idCours})}}" role="" class=" active pull-left" ><i class="fa fa-plus-circle fa-2x"></i></a>
+
+                                    </div>
+                                    <p style="    margin-bottom: -8px;
+                                       margin-top: 8px;">   <i class=" fa fa-video-camera"></i> <i class="fa fa-certificate"></i> </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+
+
+                </div><!--/.container-->
+
+                <div class="text-center" style="">
+                    <ul class="pagination">
+                        {{ knp_pagination_render(pagination) }}
+                    </ul>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    </section>
+
+
+
+{% endblock %}
